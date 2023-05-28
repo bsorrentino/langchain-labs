@@ -1,3 +1,5 @@
 langchain
 openai
-google-search-tools
+#google-search-tools
+pdfminer.six
+kor
