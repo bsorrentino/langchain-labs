@@ -1,0 +1,69 @@
+{
+    "cells": [
+        {
+            "language": "markdown",
+            "source": [
+                "Initialize [OpenAI nodejs SDK](https://www.npmjs.com/package/openai)"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { Configuration, OpenAIApi } from \"openai\";\n\nconst configuration = new Configuration({\n  apiKey: process.env.OPENAI_API_KEY,\n});\nconst openai = new OpenAIApi(configuration);\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "Let define a `function description` to provide function metadata to GPT"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const function_descriptions = [\n    {\n        \"name\": \"export_solution\",\n        \"description\": \"export a dataverse solution to remove environment\",\n        \"parameters\": {\n            \"type\": \"object\",\n            \"properties\": {\n                \"path\": {\n                    \"type\": \"string\",\n                    \"description\": \"the solution path\",\n                },\n                \"environment\": {\n                    \"type\": \"string\",\n                    \"description\": \"the target environment\",\n                    \"enum\": [\"celsius\", \"fahrenheit\"]\n                },\n                \"type\": {\n                    \"type\": \"string\",\n                    \"description\": \"the solution type\",\n                    \"enum\": [\"managed\", \"unmanaged\", \"both\"]\n                },\n            },\n            \"required\": [\"path\", \"environment\"],\n        },\n    }\n];"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "const user_query = \"let import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo' as unmanaged\"; \n\ntry {\nconst chatCompletion = await openai.createChatCompletion({\n    model: \"gpt-3.5-turbo-0613\",\n    messages: [\n      {role: \"user\", content: user_query}\n    ],\n    functions: function_descriptions,\n    function_call: \"auto\"\n  });\n\n  const { message, finish_reason } = chatCompletion.data.choices[0];\n\n  console.log(finish_reason, message );\n}\ncatch( e ) {\n  console.log( e )\n}"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "function_call {",
+                                "  role: 'assistant',",
+                                "  content: null,",
+                                "  function_call: {",
+                                "    name: 'export_solution',",
+                                "    arguments: '{\\n' +",
+                                "      '  \"path\": \"/tmp/mysolution.zip\",\\n' +",
+                                "      '  \"environment\": \"bartolo\",\\n' +",
+                                "      '  \"type\": \"unmanaged\"\\n' +",
+                                "      '}'",
+                                "  }",
+                                "}",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
+            ],
+            "outputs": []
+        }
+    ]
+}

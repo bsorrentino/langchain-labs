@@ -1,0 +1,21 @@
+{
+  "name": "langchain-labs",
+  "version": "1.0.0",
+  "description": "This template provides a one-click dev environment for building \"LLM apps\" with [LangChain](https://github.com/hwchase17/langchain), Codespaces, and GPT-3. With it, you'll get [free access](https://github.blog/changelog/2022-11-09-codespaces-for-free-and-pro-accounts/) to a VS Code-based web editor, complete with a fully-configured Python playground, that includes the neccessary SDKs, libraries, and IDE extensions 🐱‍💻",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "openai": "^3.3.0",
+    "@types/node": "^20.3.1"
+  },
+  "devDependencies": {
+  }
+}
