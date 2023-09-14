@@ -36,7 +36,7 @@ $ pre-commit install
 
 ```shell
 # Run mrkl_demo.py or another app the same way
-$ streamlit run src/mrkl_demo.py
+$ streamlit run streamlit_agent/mrkl_demo.py
 ```
 
 # Running with Docker
