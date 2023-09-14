@@ -6,7 +6,7 @@
         "codespaces": {
           "openFiles": [
             "README.md",
-            "streamlit_agent/mrkl_demo.py"
+            "src/mrkl_demo.py"
           ]
         },
         "vscode": {
@@ -27,7 +27,7 @@
     // Use 'postAttachCommand' to run commands after a tool has attached to the container.
     // Start the app.
     "postAttachCommand": {
-        "server": "streamlit run streamlit_agent/mrkl_demo.py --server.enableCORS false --server.enableXsrfProtection false"
+        "server": "streamlit run src/mrkl_demo.py --server.enableCORS false --server.enableXsrfProtection false"
     },
     "portsAttributes": {
         "8501": {

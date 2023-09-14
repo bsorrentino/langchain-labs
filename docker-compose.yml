@@ -3,8 +3,8 @@ services:
   langchain-streamlit-agent:
     image: langchain-streamlit-agent:latest
     build: .
-    #command: streamlit run streamlit_agent/basic_memory.py --server.port 8051
+    #command: streamlit run src/basic_memory.py --server.port 8051
     volumes:
-      - ./streamlit_agent/:/app/streamlit_agent
+      - ./src/:/app/src
     ports:
       - 8051:8051

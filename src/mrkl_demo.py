@@ -11,8 +11,8 @@ from langchain.llms import OpenAI
 from langchain.utilities import DuckDuckGoSearchAPIWrapper
 from langchain_experimental.sql import SQLDatabaseChain
 
-from streamlit_agent.callbacks.capturing_callback_handler import playback_callbacks
-from streamlit_agent.clear_results import with_clear_container
+from src.callbacks.capturing_callback_handler import playback_callbacks
+from src.clear_results import with_clear_container
 
 DB_PATH = (Path(__file__).parent / "Chinook.db").absolute()
 
