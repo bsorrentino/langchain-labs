@@ -3,7 +3,8 @@ services:
   langchain-streamlit-agent:
     image: langchain-streamlit-agent:latest
     build: .
-    command: streamlit run streamlit_agent/chat_workflow.py --server.port 8051
+    #command: streamlit run streamlit_agent/chat_workflow.py --server.port 8051
+    command: streamlit run streamlit_agent/chat_with_tools_functions_memory/chat.py --server.port 8051
     volumes:
       - ./streamlit_agent/:/app/streamlit_agent
     ports:
