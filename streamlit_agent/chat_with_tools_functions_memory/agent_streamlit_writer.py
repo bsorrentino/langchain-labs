@@ -24,7 +24,8 @@ class StreamlitCallbackHandler(BaseCallbackHandler):
     ) -> Any:
         """Run on agent action."""
         self.st.write(f"Tool: {action.tool}")
-        self.st.write(f"Input: {action.tool_input['query']}")
+        #self.st.write(f"Input: {action.tool_input['query']}")
+        self.st.write(f"Input: {action.tool_input}")
 
     def on_agent_finish(
         self,

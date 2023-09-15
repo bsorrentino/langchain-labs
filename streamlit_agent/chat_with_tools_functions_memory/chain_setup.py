@@ -2,19 +2,25 @@ from typing import Tuple, Dict
 # from langchain.utilities.duckduckgo_search import DuckDuckGoSearchAPIWrapper
 # from langchain.utilities import PubMedAPIWrapper
 from langchain.utilities.wikipedia import WikipediaAPIWrapper
-from langchain import (
-    # ArxivAPIWrapper, 
-    LLMMathChain
-)
-from langchain.agents import initialize_agent, Tool
-from langchain.tools import StructuredTool
-from langchain.agents import AgentType
 
-from langchain.agents import AgentExecutor
+# from langchain import (
+#     ArxivAPIWrapper, 
+#     LLMMathChain
+# )
+from langchain.agents import (
+    initialize_agent, 
+    Tool,
+    AgentType,
+    create_csv_agent,
+    AgentExecutor,
+)
+from langchain.llms import OpenAI
+
+from langchain.tools import StructuredTool
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts.chat import MessagesPlaceholder
-# import tools_wrappers
 
+# import tools_wrappers
 
 def setup_memory() -> Tuple[Dict, ConversationBufferMemory]:
     """
@@ -28,7 +34,7 @@ def setup_memory() -> Tuple[Dict, ConversationBufferMemory]:
 
     return agent_kwargs, memory
 
-def setup_agent( cfg ) -> AgentExecutor:
+def setup_agent( cfg, csv_file ) -> AgentExecutor:
     """
     Sets up the tools for a function based chain.
     We have here the following tools:
@@ -45,14 +51,29 @@ def setup_agent( cfg ) -> AgentExecutor:
     # arxiv = ArxivAPIWrapper()
     # events = tools_wrappers.EventsAPIWrapper()
     # events.doc_content_chars_max=5000
+
+    csv_agent = create_csv_agent(
+        cfg.llm,
+        #OpenAI(temperature=0, model="gpt-3.5-turbo", openai_api_key=cfg.llm.openai_api_key),
+        csv_file,
+        verbose=True,
+        #agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
+    )
     wikipedia = WikipediaAPIWrapper()
-    llm_math_chain = LLMMathChain.from_llm(llm=cfg.llm, verbose=False)
+
+    # llm_math_chain = LLMMathChain.from_llm(llm=cfg.llm, verbose=False)
+
     tools = [
         Tool(
-            name="Calculator",
-            func=llm_math_chain.run,
-            description="useful for when you need to answer questions about math"
+            name="CSVEvaluator",
+            func=csv_agent.run,
+            description="evaluate movie data in the uploaded CSV file"
         ),
+        # Tool(
+        #     name="Calculator",
+        #     func=llm_math_chain.run,
+        #     description="useful for when you need to answer questions about math"
+        # ),
         Tool(
             name="Wikipedia",
             func=wikipedia.run,
