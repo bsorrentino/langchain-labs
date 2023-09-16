@@ -8,7 +8,7 @@ import logging
 
 import streamlit as st
 from langchain.agents import AgentExecutor
-from langchain.chat_models import ChatOpenAI
+from langchain.chat_models import ChatOpenAI, AzureChatOpenAI
 from langchain.prompts import PromptTemplate
 
 from chain_setup import setup_agent
@@ -25,14 +25,44 @@ class AgentConfig():
     """
     model = 'gpt-3.5-turbo-0613'
 
-    def __init__(self, openai_api_key ):        
-        self.llm = ChatOpenAI(
-            temperature=0, 
-            model=self.model, 
-            openai_api_key=openai_api_key, 
-            max_retries=2,
-            max_tokens=2048 )
-        logging.debug( f"openai_api_key: {openai_api_key}" )
+    def __init__(self, st, azure=True ):    
+        if azure:
+            # Get an OpenAI API Key before continuing
+            if "azure_openai_api_key" in st.secrets:
+                openai_api_key = st.secrets.azure_openai_api_key
+            else:
+                openai_api_key = st.sidebar.text_input("Azure OpenAI API Key", type="password")
+            
+            self.llm = AzureChatOpenAI(
+                openai_api_base="https://labsai.openai.azure.com/",
+                openai_api_version="2023-08-01-preview",
+                deployment_name="Calling-Function",
+                openai_api_key=openai_api_key,
+                openai_api_type="azure",
+                max_retries=2,
+                # max_tokens=1000,
+                )
+        else:
+            # Get an OpenAI API Key before continuing
+            if "openai_api_key" in st.secrets:
+                openai_api_key = st.secrets.openai_api_key
+            else:
+                openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+            
+            self.llm = ChatOpenAI(
+                temperature=0, 
+                model=self.model, 
+                openai_api_key=openai_api_key, 
+                max_retries=2,
+                # max_tokens=1000,
+                )
+        # logging.debug( f"openai_api_key: {openai_api_key}" )
+
+        if not openai_api_key:
+            st.info("Enter an OpenAI API Key to continue")
+            st.stop()
+
+ 
 
 
 def init_stream_lit():
@@ -40,16 +70,6 @@ def init_stream_lit():
 
     st.set_page_config(page_title=title, layout="wide")
     
-    # Get an OpenAI API Key before continuing
-    if "openai_api_key" in st.secrets:
-        openai_api_key = st.secrets.openai_api_key
-    else:
-        openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-    
-    if not openai_api_key:
-        st.info("Enter an OpenAI API Key to continue")
-        st.stop()
-
     st.header(title)
     
     if QUESTION_HISTORY not in st.session_state:
@@ -65,7 +85,7 @@ def init_stream_lit():
 
     logging.debug( f"Uploaded CSV file: {csv_file}" )
 
-    agent_executor: AgentExecutor = prepare_agent( openai_api_key, csv_file )
+    agent_executor: AgentExecutor = prepare_agent( csv_file )
 
     simple_chat_tab, log_tab, historical_tab = st.tabs(["Simple Chat", "Log", "Session History"])
     
@@ -112,8 +132,8 @@ def intro_text():
     """)
         
 @st.cache_resource()
-def prepare_agent( openai_api_key, csv_file ) -> AgentExecutor:
-    return setup_agent( cfg = AgentConfig(openai_api_key), csv_file=csv_file )
+def prepare_agent( csv_file ) -> AgentExecutor:
+    return setup_agent( cfg = AgentConfig(st), csv_file=csv_file )
 
 
 if __name__ == "__main__":

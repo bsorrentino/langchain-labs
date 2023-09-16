@@ -15,6 +15,7 @@ from langchain.agents import (
     AgentExecutor,
 )
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 
 from langchain.tools import StructuredTool
 from langchain.memory import ConversationBufferMemory
@@ -54,10 +55,8 @@ def setup_agent( cfg, csv_file ) -> AgentExecutor:
 
     csv_agent = create_csv_agent(
         cfg.llm,
-        #OpenAI(temperature=0, model="gpt-3.5-turbo", openai_api_key=cfg.llm.openai_api_key),
-        csv_file,
+        path=csv_file,
         verbose=True,
-        #agent_type=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
     )
     wikipedia = WikipediaAPIWrapper()
 
