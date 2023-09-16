@@ -12,5 +12,5 @@ services:
     environment:
       - LANGCHAIN_TRACING_V2=true
       - LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
-      - LANGCHAIN_API_KEY=ls__01b19d36b8c94f279c3fccd7884efd16
+      - LANGCHAIN_API_KEY=${LANGCHAIN_API_KEY}
       - LANGCHAIN_PROJECT=langchain-labs
