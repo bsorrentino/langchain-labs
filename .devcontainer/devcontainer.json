@@ -42,5 +42,11 @@
         // "ghcr.io/devcontainers-contrib/features/coverage-py:2": {},
         // "git": "latest",
         // "github-cli": "latest"
+    },
+    "containerEnv": {
+      "LANGCHAIN_TRACING_V2": "true",
+      "LANGCHAIN_ENDPOINT": "https://api.smith.langchain.com",
+      "LANGCHAIN_API_KEY": "${LANGCHAIN_API_KEY}",
+      "LANGCHAIN_PROJECT":"langchain-labs"
     }
 }
