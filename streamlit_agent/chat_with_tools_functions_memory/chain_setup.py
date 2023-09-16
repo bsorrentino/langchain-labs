@@ -35,7 +35,7 @@ def setup_memory() -> Tuple[Dict, ConversationBufferMemory]:
 
     return agent_kwargs, memory
 
-def setup_agent( cfg, csv_file ) -> AgentExecutor:
+def setup_agent( cfg ) -> AgentExecutor:
     """
     Sets up the tools for a function based chain.
     We have here the following tools:
@@ -55,7 +55,7 @@ def setup_agent( cfg, csv_file ) -> AgentExecutor:
 
     csv_agent = create_csv_agent(
         cfg.llm,
-        path=csv_file,
+        path=cfg.csv_file,
         verbose=True,
     )
     wikipedia = WikipediaAPIWrapper()

@@ -3,6 +3,7 @@ Inspired by [LangChain Chat with Custom Tools, Functions and Memory](https://med
 """
 
 import logging
+from typing import Any
 #from dotenv import load_dotenv
 #load_dotenv()
 
@@ -23,47 +24,60 @@ class AgentConfig():
     """
     Contains the configuration of the LLM.
     """
-    model = 'gpt-3.5-turbo-0613'
+    llm: Any
+    csv_file: Any
+    
+    def __init__(self, llm, csv_file ):
+        self.llm = llm    
+        self.csv_file = csv_file
 
-    def __init__(self, st, azure=True ):    
-        if azure:
-            # Get an OpenAI API Key before continuing
-            if "azure_openai_api_key" in st.secrets:
-                openai_api_key = st.secrets.azure_openai_api_key
-            else:
-                openai_api_key = st.sidebar.text_input("Azure OpenAI API Key", type="password")
-            
-            self.llm = AzureChatOpenAI(
-                openai_api_base="https://labsai.openai.azure.com/",
-                openai_api_version="2023-08-01-preview",
-                deployment_name="Calling-Function",
-                openai_api_key=openai_api_key,
-                openai_api_type="azure",
-                max_retries=2,
-                # max_tokens=1000,
-                )
+
+def create_agent_config( st, azure=True  ):
+    csv_file = st.file_uploader("Upload a CSV file", type="csv")
+    #st.write("Uploaded CSV file: ", csv_file)
+    
+    if csv_file is None:
+        st.stop()
+
+    logging.debug( f"Uploaded CSV file: {csv_file}" )
+
+    if azure:
+        # Get an OpenAI API Key before continuing
+        if "azure_openai_api_key" in st.secrets:
+            openai_api_key = st.secrets.azure_openai_api_key
         else:
-            # Get an OpenAI API Key before continuing
-            if "openai_api_key" in st.secrets:
-                openai_api_key = st.secrets.openai_api_key
-            else:
-                openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
-            
-            self.llm = ChatOpenAI(
-                temperature=0, 
-                model=self.model, 
-                openai_api_key=openai_api_key, 
-                max_retries=2,
-                # max_tokens=1000,
-                )
-        # logging.debug( f"openai_api_key: {openai_api_key}" )
+            openai_api_key = st.sidebar.text_input("Azure OpenAI API Key", type="password")
+        
+        llm = AzureChatOpenAI(
+            openai_api_base="https://labsai.openai.azure.com/",
+            openai_api_version="2023-08-01-preview",
+            deployment_name="Calling-Function",
+            openai_api_key=openai_api_key,
+            openai_api_type="azure",
+            max_retries=2,
+            # max_tokens=1000,
+            )
+    else:
+        # Get an OpenAI API Key before continuing
+        if "openai_api_key" in st.secrets:
+            openai_api_key = st.secrets.openai_api_key
+        else:
+            openai_api_key = st.sidebar.text_input("OpenAI API Key", type="password")
+        
+        llm = ChatOpenAI(
+            temperature=0, 
+            model='gpt-3.5-turbo-0613', 
+            openai_api_key=openai_api_key, 
+            max_retries=2,
+            # max_tokens=1000,
+            )
+    # logging.debug( f"openai_api_key: {openai_api_key}" )
 
-        if not openai_api_key:
-            st.info("Enter an OpenAI API Key to continue")
-            st.stop()
+    if not openai_api_key:
+        st.info("Enter an OpenAI API Key to continue")
+        st.stop()
 
- 
-
+    return AgentConfig( llm, csv_file )
 
 def init_stream_lit():
     title = "Chat Functions Introduction"
@@ -77,15 +91,7 @@ def init_stream_lit():
     
     intro_text()
     
-    csv_file = st.file_uploader("Upload a CSV file", type="csv")
-    #st.write("Uploaded CSV file: ", csv_file)
-    
-    if csv_file is None:
-        st.stop()
-
-    logging.debug( f"Uploaded CSV file: {csv_file}" )
-
-    agent_executor: AgentExecutor = prepare_agent( csv_file )
+    agent_executor: AgentExecutor = prepare_agent( create_agent_config(st) )
 
     simple_chat_tab, log_tab, historical_tab = st.tabs(["Simple Chat", "Log", "Session History"])
     
@@ -132,8 +138,8 @@ def intro_text():
     """)
         
 @st.cache_resource()
-def prepare_agent( csv_file ) -> AgentExecutor:
-    return setup_agent( cfg = AgentConfig(st), csv_file=csv_file )
+def prepare_agent( _cfg ) -> AgentExecutor:
+    return setup_agent( _cfg )
 
 
 if __name__ == "__main__":
