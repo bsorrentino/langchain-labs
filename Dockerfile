@@ -22,7 +22,7 @@ RUN poetry install --without dev --no-root && rm -rf $POETRY_CACHE_DIR
 # The runtime image, used to just run the code provided its virtual environment
 FROM python:3.11-slim-buster as runtime
 
-COPY ./root /root
+COPY ./.streamlit /root/.streamlit
 
 ENV VIRTUAL_ENV=/app/.venv \
     PATH="/app/.venv/bin:$PATH"
