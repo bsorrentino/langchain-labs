@@ -11,6 +11,9 @@ from langchain.prompts import PromptTemplate
 
 import streamlit as st
 
+from prompts import workflow_template
+from plantuml_agent import generate_diagram_syntax
+
 # configure logging
 logging.basicConfig(level=logging.DEBUG)
 
@@ -27,21 +30,6 @@ def deflate_and_encode(plantuml_text):
     zlibbed_str = compress(plantuml_text.encode('utf-8'))
     compressed_string = zlibbed_str[2:-4]
     return base64.b64encode(compressed_string).translate(b64_to_plantuml).decode('utf-8')
-
-def generate_diagram_syntax( llm, revised_prompt ):
-    template = """{revised_prompt}
-    
-    Evaluate revised prompt above to generate a diagram using "PlantUML Activity Diagram Syntax" 
-    write only and esclusively the diagram in markdown format starting with  "```plantuml".
-    
-    the rules that you must follow for diagram generation are:
-    * AttachData, Input, Popup are keywords
-    
-    """
-    prompt = PromptTemplate(input_variables=["revised_prompt"], template=template)
-    llm_chain = LLMChain(llm=llm, prompt=prompt)
-    result = llm_chain.run({ "revised_prompt": revised_prompt })
-    return result
 
 def clear_session(): 
     # Delete all the items in Session state
@@ -76,24 +64,9 @@ def main():
         st.stop()
 
     # Set up the LLMChain, passing in memory
-    template = """I want you to become my Prompt engineer. 
-    Your goal is to help Me craft the best possible prompt for Design a Flow Chart. 
-    The prompt will be used by you, AI Assistant. 
 
-    You will follow the following process: 
-    1. Your first response will be to ask me what the next step of my workflow. I will provide my answer, but we will need to improve it through continual iterations by going through the next steps. 
-    2. Based on my input, you will provide as much as possible coincise answer containing only the revised prompt (it should be clear, concise, and easily understood by you), 
-    3. You will continue this iterative process until I submit as next step: 'end'
 
-    You must follow the requirements below:
-    1. Don't write any other than the workflow steps
-    2. Keep only and exclusively My provided steps
-
-    {history}
-    Human: {human_input}
-    AI:"""
-
-    prompt = PromptTemplate(input_variables=["history", "human_input"], template=template)
+    prompt = PromptTemplate(input_variables=["history", "human_input"], template=workflow_template)
 
     llm = OpenAI(openai_api_key=openai_api_key, temperature="0.0")
     llm_chain = LLMChain(llm=llm, prompt=prompt, memory=memory)
@@ -101,7 +74,6 @@ def main():
     # Render current messages from StreamlitChatMessageHistory
     # for msg in msgs.messages:
     #     st.chat_message(msg.type).write(msg.content)
-
 
     if 'lastResponse' not in st.session_state:
         st.session_state.lastResponse = ""
