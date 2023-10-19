@@ -5,6 +5,8 @@ import dev.langchain4j.model.openai.OpenAiChatModel;
 import java.util.Arrays;
 import java.util.Optional;
 
+import static dev.langchain4j.model.openai.OpenAiModelName.GPT_3_5_TURBO;
+
 /**
  * Hello world!
  *
@@ -41,9 +43,12 @@ public class App
     {
         var parseArg = ParseArg.of(args);
 
+        var apiKey = parseArg.valueOf("api_key").orElseThrow( () -> new Exception("no 'api_key' provided!"));
+        var modelName = parseArg.valueOf("model_name").orElse(GPT_3_5_TURBO);
         // Create an instance of a model
         var model = OpenAiChatModel.builder()
-                .apiKey(parseArg.valueOf("api_key").orElseThrow( () -> new Exception("no 'api_key' provided!")))
+                .apiKey(apiKey)
+                .modelName( modelName )
                 .logResponses(true)
                 .maxRetries(5)
                 .temperature(0.0)

@@ -2,23 +2,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <!-- Project from https://start.vaadin.com/project/78e581e4-bb68-4339-b6e6-31ee781a5fdf -->
-    <groupId>com.example.application</groupId>
-    <artifactId>my-app</artifactId>
-    <name>my-app</name>
+
+    <artifactId>langchain4j-vaadin-chat-app</artifactId>
+    <name>langchain4j::vaadin::chat::app</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <parent>
+        <groupId>org.bsc.ai</groupId>
+        <artifactId>langchain4j-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
+
     <properties>
-        <java.version>17</java.version>
         <vaadin.version>24.2.0</vaadin.version>
     </properties>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.1.2</version>
-    </parent>
 
     <repositories>
         <repository>
@@ -33,6 +32,14 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>3.1.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-bom</artifactId>
                 <version>${vaadin.version}</version>
@@ -46,7 +53,6 @@
         <dependency>
             <groupId>dev.langchain4j</groupId>
             <artifactId>langchain4j-azure-open-ai</artifactId>
-            <version>0.23.0</version>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
