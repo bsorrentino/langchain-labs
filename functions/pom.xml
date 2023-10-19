@@ -2,9 +2,9 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>langchain4j-prompts</artifactId>
+  <artifactId>langchain4j-functions</artifactId>
   <packaging>jar</packaging>
-  <name>langchain4j::simple::prompts</name>
+  <name>langchain4j::calling::functions</name>
 
   <parent>
     <groupId>org.bsc.ai</groupId>

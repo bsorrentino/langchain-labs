@@ -1,4 +1,4 @@
-package org.example;
+package org.bsc.ai;
 
 import dev.langchain4j.model.openai.OpenAiChatModel;
 
@@ -41,14 +41,12 @@ public class App
 
     public static void main( String[] args ) throws Exception
     {
-        var parseArg = ParseArg.of(args);
+        var config = AIConfig.of(args);
 
-        var apiKey = parseArg.valueOf("api_key").orElseThrow( () -> new Exception("no 'api_key' provided!"));
-        var modelName = parseArg.valueOf("model_name").orElse(GPT_3_5_TURBO);
         // Create an instance of a model
         var model = OpenAiChatModel.builder()
-                .apiKey(apiKey)
-                .modelName( modelName )
+                .apiKey( config.getApiKey() )
+                .modelName( config.getModel() )
                 .logResponses(true)
                 .maxRetries(5)
                 .temperature(0.0)
