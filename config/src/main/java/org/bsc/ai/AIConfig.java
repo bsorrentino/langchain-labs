@@ -19,12 +19,11 @@ public class AIConfig {
             if (args[i].equalsIgnoreCase(key)) {
                 if (i < args.length - 1) {
                     return Optional.of(args[i + 1]);
-                } else {
-                    break;
                 }
+                break;
             }
         }
-        return Optional.empty();
+        return Optional.ofNullable(System.getenv( key ));
     }
 
     public final String  getModel() {

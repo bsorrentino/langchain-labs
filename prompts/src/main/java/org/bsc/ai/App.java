@@ -14,31 +14,6 @@ import static dev.langchain4j.model.openai.OpenAiModelName.GPT_3_5_TURBO;
 public class App 
 {
 
-    static class ParseArg {
-        public static ParseArg of(String[] args) {
-            return new ParseArg(args);
-        }
-
-        final String[] args;
-
-        private ParseArg(String[] args) {
-            this.args = args;
-        }
-
-        public Optional<String> valueOf(String key ) {
-            for (int i = 0; i < args.length; i++) {
-                if (args[i].equalsIgnoreCase(key)) {
-                    if (i < args.length - 1) {
-                        return Optional.of(args[i + 1]);
-                    } else {
-                        break;
-                    }
-                }
-            }
-            return Optional.empty();
-        }
-    }
-
     public static void main( String[] args ) throws Exception
     {
         var config = AIConfig.of(args);
