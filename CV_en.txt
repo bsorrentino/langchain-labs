@@ -1,0 +1,336 @@
+﻿Bartolomeo SORRENTINO
+
+
+CONTACT INFORMATION         
+
+
+
+
+Mobile.: 
+	+39 3453683869
+	Email: 
+	bartolomeo.sorrentino@soulsoftware.eu
+bartolomeo.sorrentino@softphone.it
+	LinkedIn: 
+	www.linkedin.com/in/bartolomeosorrentino
+	Blog: 
+	soulsoftware-bsc.blogspot.it/
+https://bsorrentino.github.io/bsorrentino/
+	Twitter: 
+	https://twitter.com/bsorrentinoJ
+	Github:
+	https://github.com/bsorrentino
+	StackOverflow
+	https://stackoverflow.com/users/521197/bsorrentino
+	
+
+PERSONAL INFORMATION
+
+
+Nationality.: 
+	Italian
+	Birth Date: 
+	March 9, 1968
+	Marital Status: 
+	Married
+	Resident in:
+	Mercogliano (AV) - Italy
+	
+
+
+
+PROFILE         
+
+
+Bartolomeo Sorrentino is a Principal Software Architect with over 25 years of experience.  He is an expert in the design and implementation of complex software architecture, the setup of Software Factory (both processes and tools) and leading development teams (also geographical distributed) in projects with specific focus on quality and functionality.
+
+
+Bartolomeo is an active contributor to  the open source ecosystem.  He leads several projects and contributes to many others. 
+
+
+He has worked for the past years with a variety of companies in different domains, both product and service (e.g. Siemens Business Services) across several countries in Europe (France, UK, Germany) and US. 
+
+
+He currently is the CTO of Softphone  S.r.l. an Italian company whose core business is the setup, customization & management of  "Contact Centers" using a variety of technologies, products, and standards.
+
+
+In 2009 Bartolomeo led the setup of Soulsoftware, a new business unit within Softphone which acts as a software factory and he is responsible for productization of the company's technological assets and providing professional services in the technological domain. 
+In this role, he has created and managed the development team and selected the  technology topics to follow.
+ 
+He believes in 
+
+
+1. "Web As Platform" paradigm and therefore  in Services  and the Cloud  
+
+
+2. "Software Factory" as  union of "processes & tools" that could guarantee "quality" of code, "reusability" of  assets, and collaboration across diverse and distributed teams
+
+
+EDUCATION
+
+
+High School Diploma - Institute of Technical education with informatics specialization
+I.T.I.S - F. Giordani, Naples, Italy, 1985 - 1986
+
+
+
+
+ENGLISH LANGUAGE:
+Written: good;        
+Spoken: good;
+
+
+PRIVATE INTEREST (passions)
+
+
+* SPORT (Soccer, Tennis, Swimming, Gym)
+* MOVIES (SciFi, Action)
+* COMICS
+
+
+
+
+CERTIFICATION
+
+
+‘VeraStream EAI developer’ received by WRQ Software YEAR 1998 (Amsterdam)
+
+
+
+
+KEY TECHNOLOGY SKILLS        
+
+
+As a software architect Bartolomeo has dealt with projects concerning Enterprise Application Integration, Products Lifecycle Management, build Mobile & Embedded systems and delivering Complex Real Time Architectures
+
+
+He use methodologies like Agile, eXtreme Programming and he  has Cloud experience (PAAS)  in particular on Azure, GCP and AWS
+
+
+Regarding “Hands On” skill He has a “full-stack” development expertise and  currently works with language such as Java ( jdk8-19 ), Swift, Typescript, Rust and PowerFx on different technology stacks  and runtime  (Nodejs, Webassembly, spring-boot, PowerApps )
+
+
+Lately his interest is focused on the “Low-Code” business platforms (e.g. Microsoft Power Platform ) that he consider an important driver in the “digital transformation” next scenarios
+	
+
+	
+
+PUBLICATIONS / OPEN SOURCE CONTRIBUTION
+
+
+Concerning Open Source Contribution he has published several projects, the most representative ones are outlined below:
+ 
+* Maven plugin
+   * Maven Confluence Plugin https://github.com/bsorrentino/maven-confluence-plugin Maven report plugin that allow to generate and upload "project info" as wiki page ‘confluence compliant’ 
+   * Maven Annotation Plugin https://github.com/bsorrentino/maven-annotation-plugin A maven plugin to process annotation at compile time
+* Mobile
+   * SlideOnTV - The application's purpose is to make easy and comfortable (from your sofa) to watch the presentations on your TV. (https://github.com/bsorrentino/slidesOnTV)
+
+
+* Publication upon Italian Magazine named ‘ Mobility LAB’ (www.mobilitylab.it) title :’ l’autobus diventa un web server’,  concerning use of standard components to manage activities of On Board Embedded Computer
+* He also contribute to Medium and Dev.to online magazines
+
+
+
+
+
+
+
+
+WORK EXPERIENCE TIMELINE
+
+
+Currently involved in the following activities:
+* Consultant as Solution Architect for an international company whose main focus is on  pharmaceutical distribution where he is dealing with the Microservice Architecture migration, definition  & implementation.
+* Defining and maintaining architecture for air drone simulation platform..
+* Evaluation of tools & Technologies for implementing Micro Front End Architecture.
+* Evaluation of Microsoft Power Platform in order to include it as Soulsoftware's strategic stream. 
+
+
+From December 2013  - SoulSoftware Srl (Avellino - Italy)
+Software Factory Lead  
+
+
+Main Activities
+* Definition of Client & Mobile strategies for a big customer
+* Development of SDK for “Proximity Marketing” using the iBeacon technology
+* Evaluation of use of Native  or Hybrid (WebRTC)  approach for implementation of “SIP enabled” mobile devices for contact center
+
+
+
+
+From December 2010  - SoulSoftware Srl (Avellino - Italy)
+Software Factory Lead  
+
+
+Participate in the setup of the company SoulSoftware Ltd. whose mandate is to become the Software Factory of the Softphone Ltd. and a center of research and development focused upon the new  Mobile Technology & Cloud
+
+
+Assumed responsibility to Software Factory's setup. The activities were  :
+* Select & Build a development team 
+* Market Analysis upon Cloud Services (SAAS, PAAS)
+   * Google App Engine
+   * CloudBees 
+* Definition of target 
+   * IOS - IPhone/ IPad
+   * Android 2.3.x - 4.x
+* Selection of  technologies & framework both for native and multi-platform development
+   * Mobile GWT
+   * Sencha Touch
+   * Cordova/Phonegap (plugin development)
+
+
+
+
+From july 2008 - Softphone Srl (Pavia - Italy)
+Software Factory Lead 
+
+
+Assumed responsibility to Software Factory's setup. The activities were  :
+* Build a development team
+* Definition of software lifecycle processes from requirements to delivery
+* Selection of  technologies & tools able to set up a collaboration system allowing remote working.
+
+
+In this period he also deals with the design and implementation of software solutions related to contact center system built using GenesysTM System and in particular deals with integration between back-end systems (CRM, document management , ...) , operator desktop management, SIP Voice Recorder, Automatic Speech Recognition   and voice portals development.
+
+
+Also contributes to the definition of a strategy/technology plan  which aims to introduce in the production chain of software factory know-how and technologies related to mobile computing with a special attention to IPhone/IPad.
+Relate to  Mobile proposal he has developed several Mobile APP to give values to Softphone Assets Portfolio 
+
+
+* IAudit - IPad console to control Genesys contact center operational work 
+(take a look to presentation video http://www.screencast.com/t/UFuTRi3B24u)
+
+
+
+
+From  february  2005 to July 2008 - Herzum Software  (Chicago IL)
+Principal Architect
+
+
+Chicago (US)
+London(UK)
+	Assumed for the design and definition of an architecture related to B2B and B2C portal for a large pharmaceutical distribution group headquartered in the UK.
+
+
+During this period, held mostly in Chicago, acquires a good knowledge of the issues related to managing remote groups and aquires knowledge of the new methodological approach named COSM.
+
+
+	Cosenza (IT)
+	In Italy he deals with setup of a solution center  in Cosenza, organization of a development team to build the portal platform and  supporting of platforms already in place
+
+
+	Napoli (IT)
+	Consultant at the company SDC in Naples.
+
+
+He plays the role of architect for the support and development of a distributed pharmaceutical ERP system based upon SOA and developed using Herzum’s platform.
+
+
+In this period he collaborated with the client in the definition/integration  of   features/processes having as goal to introduce and implement higher levels of SOA Maturity Model and, in particular, deals with definition of a performance model capable of ensuring the requirements
+
+
+	Paris(FR)
+	Attends architectural meetings for gathering technicians's GAP(s), related to porting and integration of the ERP system in the French context
+
+
+	Napoli (IT)
+Chicago(US)
+Cosenza (IT)
+	Become a Technical Lead of the 'Herzum R&D Group'  and participates in the definition of requirements and implementation architecture for the construction of a Software Factory 'COSM' based that follow the dictates of the ALM (Application Lifecycle Management)
+	
+
+	Coordinates the R & D team (12 people between Cosenza, Chicago and Ankara) for developing the system (dead-line March 31, 2008)
+	Rabat (Marocco)
+	He is engaged as a consultant for the definition of a software factory for the creation of suitable services for e-government portal
+	
+
+
+
+From 1994 to  2005 - Italdata S.p.A (Avellino - Italy) - Siemens Business Services group 
+Technical Architect
+
+
+
+
+
+
+10 months
+	Allocated to mobile computing as  team leader. In this period he participated in the Analysis and Design of an onboard system for transportation vehicles that communicate with an operations center, problems related to localization, diagnosis, management and emergency routes communicating via GPRS / WiFi / GSM / Radio. 
+	2 years
+	Allocated to Small & Medium Enterprise Area participates in the following projects /activities:
+
+
+Design and Implementation of Web systems concerning B2B with the use of standards for exchanging information based on XML (Web Service).
+
+
+Study of Open Source frameworks for the creation of portals with content management issues.
+Analysis for integrating single sign-on systems for solving problems of authentication and authorization in a portals’ network.
+
+
+Study of the problems related to load-balancing and fault tolerance in mission-critical web applications.
+
+
+	1 year
+	Allocated to training area participates in the following activities:
+
+
+Training IT staff of Siemens AG of EAI architecture and development of B2B e-business projects in a multi-company and multi-process through the Microsoftt BizTalk Server.
+ 
+Preparing / conducting training both internal / external on design / development of web based software.
+ 
+Courses in C / C + +, using Rational Rose for design and development phases, using Oracle JDeveloper to create data-oriented applications, Use of DNA and J2EE platform.
+ 
+	2 years
+ 
+	Allocated to the Finance Area as senior developer  participates in the following projects /activities:
+
+
+Design and implementation of web-based banking system integrated with legacy systems.
+
+
+Solving problems of interfacing to legacy systems (AS400-MVS) with characteristics of resource optimization for integration in multi-tier application servers 
+
+
+	4 years
+	Allocated to Telco area as consultant participates in the following projects /activities:
+ 
+Developing  front-office  software management service centers to telecom network 182.
+
+
+Telecom consulting services for the creation of software for intelligent data processing networks.
+
+
+Telecom Consultancy in the development environment for X Windows / Motif software for data analysis of the intelligent network addressing issues of acquisition by the BS2000 host.
+	
+
+
+
+From 1991 to 1994 Database SW S.p.A (Caserta - Italy)  Analysis & development
+
+
+During this period he participates as an analyst / developer to the following activities:
+ 
+   * Development of software for bank branches in the IBM environment.
+   * Design / graphics frameworks multi platforms
+   * Acquiring knowledge of object-oriented methodology for analysis, design and development
+
+
+From 1988 to 1991 Tower Computer S.n.C (Napoli - Italy) Development
+
+
+During this period he participates as an analyst / developer to the following activities:
+
+
+   * Developing 'common purpose' software for small and medium enterprise
+
+
+
+
+
+
+________________
+
+
+ /
