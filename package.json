@@ -14,8 +14,12 @@
   "license": "ISC",
   "dependencies": {
     "@azure/openai": "^1.0.0-beta.3",
-    "@types/node": "^20.3.1",
-    "langchain": "^0.0.118",
-    "openai": "^3.3.0"
+    "dotenv": "^16.3.1",
+    "langchain": "^0.0.178",
+    "openai": "^3.3.0",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/node": "^20.9.1"
   }
 }

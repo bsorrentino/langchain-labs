@@ -3,7 +3,7 @@
         {
             "language": "typescript",
             "source": [
-                "import { OpenAI } from \"langchain/llms/openai\";\n\n\nfor (let key in process.env) { // reset AZURE environment keys\n  if( key.startsWith('AZURE')) {\n    console.log( key )\n    delete process.env[ key ] \n  }\n}\n\n\nconst model = () => {\n  try {\n    return new OpenAI({\n      openAIApiKey: process.env.OPENAI_API_KEY,\n      azureOpenAIApiKey: undefined,\n      azureOpenAIApiInstanceName: undefined,\n      azureOpenAIApiDeploymentName: undefined,\n      azureOpenAIApiVersion:undefined,\n      // modelName: \"text-davinci-003\", // Defaults to \"text-davinci-003\" if no model provided.\n      modelName: \"gpt-3.5-turbo\", \n      temperature: 0, \n      maxTokens: 500\n    });\n    \n  }\n  catch( e ) {\n    console.log( 'ERROR', e)\n  }\n  \n}\n\nconst llm = model()\n"
+                "import { OpenAI } from \"langchain/llms/openai\";\n\n\nfor (let key in process.env) { // reset AZURE environment keys\n  if( key.startsWith('AZURE')) {\n    console.log( key )\n    delete process.env[ key ] \n  }\n}\n\n\nconst model = () => {\n  try {\n    return new OpenAI({\n      openAIApiKey: process.env.OPENAI_API_KEY,\n      azureOpenAIApiKey: undefined,\n      azureOpenAIApiInstanceName: undefined,\n      azureOpenAIApiDeploymentName: undefined,\n      azureOpenAIApiVersion:undefined,\n      // modelName: \"text-davinci-003\", // Defaults to \"text-davinci-003\" if no model provided.\n      modelName: \"gpt-3.5-turbo\", \n      temperature: 0, \n      maxTokens: 500\n    });\n    \n  }\n  catch( e ) {\n    console.log( 'ERROR', e)\n  }\n  \n}\n\nexport const llm = model()\n"
             ],
             "outputs": [
                 {
