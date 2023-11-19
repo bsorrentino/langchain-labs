@@ -3,21 +3,9 @@
         {
             "language": "typescript",
             "source": [
-                "import dotenv from 'dotenv'\n\ndotenv.config({ path: '../.env' })\n\nconsole.log(process.env.OPENAI_API_KEY)"
+                "import dotenv from 'dotenv'\n\ndotenv.config({ path: '../.env' })"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "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",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -59,34 +47,7 @@
             "source": [
                 "import { LLMChain } from \"langchain/chains\";\nimport { StringOutputParser } from \"langchain/schema/output_parser\";\n\ndeclare const chain: LLMChain;\n\nconst res = await chain.call({  \n    input: `properties: imagePath required, outputPath optional`\n});\n\nconst parser = new StringOutputParser();\n\nconst text = await parser.parse(res.text);\nconsole.log(text);\n\nconst pres = /(const schema = z.object\\({.+}\\);)/gms.exec(text)\n\nconst schema = pres ? pres[1] : null;\n\nconsole.log(schema ?? \"not found\");\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "Based on your input, here is the TypeScript code for creating the object schema using Zod:",
-                                "",
-                                "```typescript",
-                                "import { z } from 'zod';",
-                                "",
-                                "const schema = z.object({",
-                                "    imagePath: z.string(),",
-                                "    outputPath: z.string().optional(),",
-                                "});",
-                                "```",
-                                "",
-                                "Please confirm if this is the schema you wanted.",
-                                "const schema = z.object({",
-                                "    imagePath: z.string(),",
-                                "    outputPath: z.string().optional(),",
-                                "});",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -100,36 +61,7 @@
             "source": [
                 "import { LLMChain } from \"langchain/chains\";\nimport { StringOutputParser } from \"langchain/schema/output_parser\";\ndeclare const chain: LLMChain;\n\n// const res = await chain.call({  input: \"yes, it is correct\"});\nconst res = await chain.call({  \n    input: \"No, add new property grayLevel optional as enum with values  4, 8 or 16 with default value 16\" \n});\n\nconst parser = new StringOutputParser();\n\nconst text = await parser.parse(res.text);\nconsole.log(text);\n\nconst pres = /(const schema = z.object\\({.+}\\);)/gms.exec(text)\n\nconst schema = pres ? pres[1] : null;\n\nconsole.log(schema ?? \"not found\");\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "I see, you want to add an optional property `grayLevel` as an enum with values 4, 8, or 16 and a default value of 16. Here is the updated TypeScript code:",
-                                "",
-                                "```typescript",
-                                "import { z } from 'zod';",
-                                "",
-                                "const schema = z.object({",
-                                "    imagePath: z.string(),",
-                                "    outputPath: z.string().optional(),",
-                                "    grayLevel: z.enum([4, 8, 16]).default(16),",
-                                "});",
-                                "```",
-                                "",
-                                "Please confirm if this is the schema you wanted.",
-                                "const schema = z.object({",
-                                "    imagePath: z.string(),",
-                                "    outputPath: z.string().optional(),",
-                                "    grayLevel: z.enum([4, 8, 16]).default(16),",
-                                "});",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -143,39 +75,7 @@
             "source": [
                 "\nimport { PromptTemplate } from \"langchain/prompts\";\nimport { ChatOpenAI } from \"langchain/chat_models/openai\";\nimport {  initializeAgentExecutorWithOptions } from \"langchain/agents\";\nimport { StructuredTool } from \"langchain/tools\";\nimport { z } from \"zod\";\n\ndeclare const schema: string;\n\nconst SaveFileSchema = z.object({\n  content: z.string().describe(\" text file content\"),\n});\nclass SaveFileTool extends StructuredTool<typeof SaveFileSchema>  {\n  name =\"save_file\"\n  description = \"save source file on local file system\"\n  schema = SaveFileSchema;\n\n  protected async _call(arg: any, runManager?: any): Promise<string> {\n    \n    console.log(\"save file\", arg )\n    return \"file saved\"\n\n      // const result = await runCommand( arg, this.execContext )\n      // return `command executed: ${result}`\n\n  }\n}\n\nconst model = new ChatOpenAI({\n  // modelName: \"gpt-4\",\n  modelName: \"gpt-3.5-turbo-0613\",\n  // stop: [\"end\", \"stop\", \"quit\"],\n  maxConcurrency: 1,\n  maxRetries: 3,\n  maxTokens: 600,\n  temperature: 0\n});\n\nconst tools = [ new SaveFileTool() ] ;\n\nconst agent = await initializeAgentExecutorWithOptions( tools, model, {\n  agentType: \"openai-functions\",\n  verbose: false,\n  handleParsingErrors: (e) => \"there is an error!\"\n});\n\n// We can construct an LLMChain from a PromptTemplate and an LLM.\n\nconst template = PromptTemplate.fromTemplate(\n  promptGenerateToolTemplate\n);\n\nconst prompt = await template.format({ \n  name: \"PlantUMLSpriteMaker\",\n  desc: \"Generate a PlantUML sprite from a given image.\",\n  schema: schema,\n})\n\nconst res = await agent.run(prompt);\n\nconsole.log(res);\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "save file {",
-                                "  content: '// begin template\\n' +",
-                                "    'import { z } from \"zod\";\\n' +",
-                                "    'import { CommandTool } from \"copilot-cli-core\";\\n' +",
-                                "    '\\n' +",
-                                "    '<SCHEMA>;\\n' +",
-                                "    '\\n' +",
-                                "    'class \"Camel case of <NAME>\"Tool extends CommandTool<typeof schema> {\\n' +",
-                                "    '    name = \"snake case of <NAME>\";\\n' +",
-                                "    '    description = \"<DESC>\";\\n' +",
-                                "    '    schema = schema;\\n' +",
-                                "    '    \\n' +",
-                                "    '    async _call(arg, runManager) {\\n' +",
-                                "    '        console.debug(\"executing <NAME> with arg:\", arg);\\n' +",
-                                "    '        return \"<NAME> executed!\";\\n' +",
-                                "    '    }\\n' +",
-                                "    '}\\n' +",
-                                "    'export default new \"Camel case of <NAME>\"Tool();\\n' +",
-                                "    '// end template\\n'",
-                                "}",
-                                "I have created the langchain command tool template for you. You can download the file [here](sandbox:/file/saved.ts).",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -189,20 +89,7 @@
             "source": [
                 "\nimport { LLMChain } from \"langchain/chains\";\nimport { StringOutputParser } from \"langchain/schema/output_parser\";\ndeclare const chain: LLMChain;\n\nconst res = await chain.call({  input: \"yes, it is correct\"});\n\nconst parser = new StringOutputParser();\n\nconst text = await parser.parse(res.text);\nconsole.log(text);\n\nconst pres = /(const schema = z.object\\({.+}\\);)/gms.exec(text)\n\nconst schema = pres ? pres[1] : null;\n\nconsole.log(schema ?? \"not found\");\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "Great! I'm glad the schema meets your requirements. If you have any other questions or need further assistance, feel free to ask.",
-                                "not found",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
@@ -216,37 +103,7 @@
             "source": [
                 "\nimport { OpenAI } from \"langchain/llms/openai\";\nimport { PromptTemplate } from \"langchain/prompts\";\nimport { LLMChain } from \"langchain/chains\";\n\ndeclare const schema: string;\n\n// We can construct an LLMChain from a PromptTemplate and an LLM.\nconst model = new OpenAI({ temperature: 0 });\nconst prompt = PromptTemplate.fromTemplate(\n  promptGenerateToolTemplate\n);\nconst chainA = new LLMChain({ llm: model, prompt });\n\n// The result is an object with a `text` property.\nconst resA = await chainA.call({ \n  name: \"PlantUML Sprite Maker\",\n  desc: \"Generate a PlantUML sprite from a given image.\",\n  schema: schema,\n});\n\nconsole.log(resA.text);\n\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "",
-                                "// beging code",
-                                "import { z } from \"zod\";",
-                                "import { CommandTool } from \"copilot-cli-core\";",
-                                "",
-                                "const schema = z.null();",
-                                "",
-                                "class PlantUmlSpriteMakerTool extends CommandTool<typeof schema> {",
-                                "    name = \"plant_uml_sprite_maker\";",
-                                "    description = \"Generate a PlantUML sprite from a given image.\";",
-                                "    schema = schema;",
-                                "    ",
-                                "    async _call(arg, runManager) {",
-                                "        console.debug(\"executing PlantUML Sprite Maker with arg:\", arg);",
-                                "        return \"PlantUML Sprite Maker executed!\";",
-                                "    }",
-                                "}",
-                                "export default new PlantUmlSpriteMakerTool();",
-                                "// end code",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         }
     ]
 }
