@@ -3,7 +3,7 @@
         {
             "language": "typescript",
             "source": [
-                "import dotenv from 'dotenv'\n\ndotenv.config({ path: '../.env' })"
+                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })"
             ],
             "outputs": []
         },
@@ -17,7 +17,7 @@
         {
             "language": "typescript",
             "source": [
-                "const promptGenerateToolTemplate =`\nAs my typescript assistant \n\nI need that you create a langchain command tool as a plugin for the copilot-cli-agent application.\nTo do that you must fill the typescript template below with the variables:\nNAME = {name}\nDESC = {desc}\nSCHEMA = {schema}\nand then copy the code below into a file named <NAME>.ts.\n\n\n// beging template\nimport {{ z }} from \"zod\";\nimport {{ CommandTool }} from \"copilot-cli-core\";\n\n<SCHEMA>;\n\nclass \"Camel case of <NAME>\"Tool extends CommandTool<typeof schema> {{\n    name = \"snake case of <NAME>\";\n    description = \"<DESC>\";\n    schema = schema;\n    \n    async _call(arg, runManager) {{\n        console.debug(\"executing <NAME> with arg:\", arg);\n        return \"<NAME> executed!\";\n    }}\n}}\nexport default new \"Camel case of <NAME>\"Tool();\n// end template\n\n`\n\nconst promptZodSchemaTemplate = `\nAs my typescript ASSISTANT expert in Zod notation.\nyou MUST create the typescript code for creating an object schema following the template below:\n\n// beging template\nconst schema = z.object(\n    // here the properties of the schema\n);\n// end template\n\nTo do this you MUST start to ask interactively to the USER the properties attibute of the object schema following the process below\n\n1. ask for property name\n2. ask for property type\n3. ask if it is required or not\n\ncontinue until USER write \"END\" as property name.\n`\n\nconst promptZodSchemaOneShotTemplate =`\nAs my typescript ASSISTANT expert in Zod usage.\nyou MUST create the typescript code for creating an object schema following the template below:\n\n// beging template\nconst schema = z.object(\n    // here the properties of the schema\n);\n// end template\n\nTo do this you MUST start to interact to the USER following the process below\n\n1. ask for properties information\n2. generate the typescript code for the schema\n3. ask to the USER to confirm the generated code\n4. if USER doesn't confirm the generated code, ask for the properties information again otherwise return typescript code \n`"
+                "const promptGenerateToolTemplate =`\nAs my typescript assistant \n\nI need that you create a langchain command tool as a plugin for the copilot-cli-agent application.\nTo do that you must fill the typescript template below with the variables:\nNAME = {name}\nDESC = {desc}\nSCHEMA = {schema}\nand then copy the code below into a file named <NAME>.ts.\n\n\n// beging template\nimport {{ z }} from \"zod\";\nimport {{ CommandTool }} from \"copilot-cli-core\";\n\n<SCHEMA>;\n\nclass \"Camel case of <NAME>\"Tool extends CommandTool<typeof schema> {{\n    name = \"snake case of <NAME>\";\n    description = \"<DESC>\";\n    schema = schema;\n    \n    async _call(arg, runManager) {{\n        console.debug(\"executing <NAME> with arg:\", arg);\n        return \"<NAME> executed!\";\n    }}\n}}\nexport default new \"Camel case of <NAME>\"Tool();\n// end template\n\n`\n\nconst promptGenerateToolTemplateWithCommand =`\n  As my typescript assistant \n\n  I need that you create a langchain command tool as a plugin for the copilot-cli-agent application.\n  To do that you must fill the typescript template below with the variables:\n  NAME = {name}\n  DESC = {desc}\n  SCHEMA = {schema}\n  COMMAND = {command}\n\n  and then copy the code below into a file named <NAME>.mts at {path}.\n\n  before filling the template consider to transform <COMMAND> in a string matching the schema attribute with command parameters.\n\n  as example :\n\n  ls -la <path> must be translated into \"ls -la {{arg.path}}\" \n\n  // beging template\n  import {{ z }} from \"zod\";\n  import {{ CommandTool, expandTilde, runCommand }} from \"copilot-cli-core\";\n\n  <SCHEMA>;\n\n  class \"Camel Case of <NAME>\"Tool extends CommandTool<typeof schema> {{\n      name = \"Snake case of <NAME>\";\n      description = \"<DESC>\";\n      schema = schema;\n      \n      async _call(arg: z.output<typeof schema>) {{\n          console.debug(\"executing '<NAME>' with arg:\", arg);\n\n          await runCommand( <command>, this.execContext )\n          return \"<NAME> executed!\";\n      }}\n  }}\n  export default new \"Camel case of <NAME>\"Tool();\n  // end template\n  `\nconst promptZodSchemaTemplate = `\nAs my typescript ASSISTANT expert in Zod notation.\nyou MUST create the typescript code for creating an object schema following the template below:\n\n// beging template\nconst schema = z.object(\n    // here the properties of the schema\n);\n// end template\n\nTo do this you MUST start to ask interactively to the USER the properties attibute of the object schema following the process below\n\n1. ask for property name\n2. ask for property type\n3. ask if it is required or not\n\ncontinue until USER write \"END\" as property name.\n`\n\nconst promptZodSchemaOneShotTemplate =`\nAs my typescript ASSISTANT expert in Zod usage.\nyou MUST create the typescript code for creating an object schema following the template below:\n\n// beging template\nconst schema = z.object(\n    // here the properties of the schema\n);\n// end template\n\nTo do this you MUST start to interact to the USER following the process below\n\n1. ask for properties information\n2. generate the typescript code for the schema\n3. ask to the USER to confirm the generated code\n4. if USER doesn't confirm the generated code, ask for the properties information again otherwise return typescript code \n`"
             ],
             "outputs": []
         },
@@ -66,14 +66,28 @@
         {
             "language": "markdown",
             "source": [
-                "scaffold the Tool using function calling\n> call a function to save generated code"
+                "### Tool defining a function that save a file"
             ],
             "outputs": []
         },
         {
             "language": "typescript",
             "source": [
-                "\nimport { PromptTemplate } from \"langchain/prompts\";\nimport { ChatOpenAI } from \"langchain/chat_models/openai\";\nimport {  initializeAgentExecutorWithOptions } from \"langchain/agents\";\nimport { StructuredTool } from \"langchain/tools\";\nimport { z } from \"zod\";\n\ndeclare const schema: string;\n\nconst SaveFileSchema = z.object({\n  content: z.string().describe(\" text file content\"),\n});\nclass SaveFileTool extends StructuredTool<typeof SaveFileSchema>  {\n  name =\"save_file\"\n  description = \"save source file on local file system\"\n  schema = SaveFileSchema;\n\n  protected async _call(arg: any, runManager?: any): Promise<string> {\n    \n    console.log(\"save file\", arg )\n    return \"file saved\"\n\n      // const result = await runCommand( arg, this.execContext )\n      // return `command executed: ${result}`\n\n  }\n}\n\nconst model = new ChatOpenAI({\n  // modelName: \"gpt-4\",\n  modelName: \"gpt-3.5-turbo-0613\",\n  // stop: [\"end\", \"stop\", \"quit\"],\n  maxConcurrency: 1,\n  maxRetries: 3,\n  maxTokens: 600,\n  temperature: 0\n});\n\nconst tools = [ new SaveFileTool() ] ;\n\nconst agent = await initializeAgentExecutorWithOptions( tools, model, {\n  agentType: \"openai-functions\",\n  verbose: false,\n  handleParsingErrors: (e) => \"there is an error!\"\n});\n\n// We can construct an LLMChain from a PromptTemplate and an LLM.\n\nconst template = PromptTemplate.fromTemplate(\n  promptGenerateToolTemplate\n);\n\nconst prompt = await template.format({ \n  name: \"PlantUMLSpriteMaker\",\n  desc: \"Generate a PlantUML sprite from a given image.\",\n  schema: schema,\n})\n\nconst res = await agent.run(prompt);\n\nconsole.log(res);\n"
+                "import { StructuredTool } from \"langchain/tools\";\nimport { z } from \"zod\";\n\nconst SaveFileSchema = z.object({\n  content: z.string().describe(\" text file content\"),\n});\nclass SaveFileTool extends StructuredTool<typeof SaveFileSchema>  {\n  name =\"save_file\"\n  description = \"save source file on local file system\"\n  schema = SaveFileSchema;\n\n  protected async _call(arg: z.output<typeof SaveFileSchema>): Promise<string> {\n    \n    console.log(\"save file\", arg )\n    return \"file saved\"\n\n      // const result = await runCommand( arg, this.execContext )\n      // return `command executed: ${result}`\n\n  }\n}\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### scaffold the Tool using function calling\n> call a function to save generated code"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { PromptTemplate } from \"langchain/prompts\";\nimport { ChatOpenAI } from \"langchain/chat_models/openai\";\nimport {  initializeAgentExecutorWithOptions } from \"langchain/agents\";\n\ndeclare const SaveFileTool:any\n// declare const schema: string\n\nconst schema = `\nconst GrayLevel = z.enum([\"4\", \"8\", \"16\"]); \n\nconst schema = z.object({\n    imagePath: z.string(),\n    outputPath: z.string().optional(),\n    grayLevel: GrayLevel.default(\"16\"),\n});`;\n\n\nconst generateToolClass = async( args:{\n        name: string, \n        desc:string, \n        schema: string, \n        command: string, \n        path:string} ) => {\n  \n  const model = new ChatOpenAI({\n    // modelName: \"gpt-4\",\n    modelName: \"gpt-3.5-turbo-0613\",\n    // stop: [\"end\", \"stop\", \"quit\"],\n    maxConcurrency: 1,\n    maxRetries: 3,\n    maxTokens: 600,\n    temperature: 0\n  });\n  \n  const tools = [ new SaveFileTool() ] ;\n  \n  const agent = await initializeAgentExecutorWithOptions( tools, model, {\n    agentType: \"openai-functions\",\n    verbose: false,\n    handleParsingErrors: (e:any) => \"there is an error!\"\n  });\n  \n  // We can construct an LLMChain from a PromptTemplate and an LLM.\n  \n  const template = PromptTemplate.fromTemplate(\n    promptGenerateToolTemplateWithCommand\n  );\n  \n  const prompt = await template.format(args)\n  \n  return await agent.run(prompt);\n\n}\n\nconst res = await generateToolClass({\n  name: \"test_run\",\n  desc: \"test description\",\n  schema: schema,\n  command: \"plantuml -encodesprite <grayLevel> <imagePath>\",\n  path: \"./plugins/save_file.mts\"\n})\nconsole.log(res);\n"
             ],
             "outputs": []
         },
@@ -94,7 +108,7 @@
         {
             "language": "markdown",
             "source": [
-                "Scaffold tool not using function calling.\n> This implies that you save code by code"
+                "Scaffold tool not using function calling.\n> This implies that you save file by code"
             ],
             "outputs": []
         },
@@ -102,6 +116,27 @@
             "language": "typescript",
             "source": [
                 "\nimport { OpenAI } from \"langchain/llms/openai\";\nimport { PromptTemplate } from \"langchain/prompts\";\nimport { LLMChain } from \"langchain/chains\";\n\ndeclare const schema: string;\n\n// We can construct an LLMChain from a PromptTemplate and an LLM.\nconst model = new OpenAI({ temperature: 0 });\nconst prompt = PromptTemplate.fromTemplate(\n  promptGenerateToolTemplate\n);\nconst chainA = new LLMChain({ llm: model, prompt });\n\n// The result is an object with a `text` property.\nconst resA = await chainA.call({ \n  name: \"PlantUML Sprite Maker\",\n  desc: \"Generate a PlantUML sprite from a given image.\",\n  schema: schema,\n});\n\nconsole.log(resA.text);\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { RegexParser } from \"langchain/output_parsers\";\n\nconst regexp = new RegExp(/```typescript\\s*(?:import { z } from 'zod';)?\\s*(.+)```/, \"s\" );\n\ntry {\n    const parser = new RegexParser( regexp, ['code'], 'noContent' );\n\n    const text = `\n    \\`\\`\\`typescript\n    import { z } from 'zod';\n    \n    const GrayLevelEnum = z.enum(['4', '8', '16']);\n    \n    const schema = z.object({\n        imagePath: z.string(),\n        outputPath: z.string().optional(),\n        grayLevel: GrayLevelEnum.default('16'),\n    });\n    \\`\\`\\`\n    `\n    // console.log(text);\n    \n    const res = await parser.parse( text );\n    \n    console.log( res );\n    \n}\ncatch( e ) {\n    console.error( e );\n}\n    \n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { z } from 'zod';\n\nconst schema = z.object({\n  primary: z.string(),\n  secondary: z.string().default('value'),\n});\n\nconst data = { primary: 'value' };\nconst result = schema.parse(data);\nconsole.log(result.secondary); // Output: 'value'\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                ""
             ],
             "outputs": []
         }
