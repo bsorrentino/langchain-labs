@@ -45,31 +45,9 @@
         {
             "language": "typescript",
             "source": [
-                "\nconst user_query1 = \"let import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo' as unmanaged\"; \nconst user_query2 = \"how in javascript can iterate over an array\"; \nconst user_query3 = \"how in javascript can iterate over an array and import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo'\"; \n\ntry {\n  \nconst chatCompletion = await openai.createChatCompletion({\n    model: \"gpt-35-turbo-0613\",\n    messages: [\n      {role: \"user\", content: user_query1}\n    ],\n    functions: function_descriptions,\n    function_call: \"auto\"\n  });\n\n  const { message, finish_reason } = chatCompletion.data.choices[0];\n\n  console.log(finish_reason, message );\n}\ncatch( e ) {\n  console.log( e )\n}"
+                "import { OpenAIApi } from \"openai\";\n\ndeclare const openai: OpenAIApi\n\nconst user_query1 = \"let import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo' as unmanaged\"; \nconst user_query2 = \"how in javascript can iterate over an array\"; \nconst user_query3 = \"how in javascript can iterate over an array and import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo'\"; \n\ntry {\n  \nconst chatCompletion = await openai.createChatCompletion({\n    model: \"gpt-35-turbo-0613\",\n    messages: [\n      {role: \"user\", content: user_query1}\n    ],\n    functions: function_descriptions,\n    function_call: \"auto\"\n  });\n\n  const { message, finish_reason } = chatCompletion.data.choices[0];\n\n  console.log(finish_reason, message );\n}\ncatch( e ) {\n  console.log( e )\n}"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "ReferenceError: openai is not defined",
-                                "    at <Cell 7> [6, 6]",
-                                "    at <Cell 7> [21, 46]",
-                                "    at Script.runInContext (node:vm:135:12)",
-                                "    at Script.runInNewContext (node:vm:140:17)",
-                                "    at Object.runInNewContext (node:vm:292:38)",
-                                "    at C (/Users/bsorrentino/.vscode/extensions/donjayamanne.typescript-notebook-2.0.6/out/extension/server/index.js:2:113345)",
-                                "    at t.execCode (/Users/bsorrentino/.vscode/extensions/donjayamanne.typescript-notebook-2.0.6/out/extension/server/index.js:2:114312)",
-                                "    at k.<anonymous> (/Users/bsorrentino/.vscode/extensions/donjayamanne.typescript-notebook-2.0.6/out/extension/server/index.js:2:142156)",
-                                "    at k.emit (node:events:517:28)",
-                                "    at k.emit (node:domain:489:12)",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "typescript",
