@@ -2,3 +2,4 @@
 examples/doc*.pdf
 node_modules/
 .env
+.venv
