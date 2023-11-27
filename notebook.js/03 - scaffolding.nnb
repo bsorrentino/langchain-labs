@@ -47,60 +47,7 @@
             "source": [
                 "import { ChatOpenAI } from \"langchain/chat_models/openai\";\nimport { LLMChain } from \"langchain/chains\";\nimport { BufferMemory } from \"langchain/memory\";\nimport { ChatPromptTemplate, MessagesPlaceholder } from \"langchain/prompts\";\n\nconst chat = new ChatOpenAI({ modelName: \"gpt-4\", temperature: 0, stop: [\"END\"] });\nconst memory = new BufferMemory({ returnMessages: true, memoryKey: \"history\" })\n\nconst prompt = ChatPromptTemplate.fromMessages([\n  [ \"system\", promptZodSchemaTemplate], \n  new MessagesPlaceholder(\"history\"),\n  [\"human\", \"{input}\"]] )\n\nconsole.log( await prompt.format( { input: \"let's start\", history: [] } ) )\n\nconst chain = new LLMChain({\n    llm: chat,\n    prompt: prompt,\n    memory: memory,\n  });\n\nlet res = await chain.call({  input: `let's start` });\n\nconsole.log( res )\n\nres = await chain.call({  input: `property1` });\n\nconsole.log( res )\n\nres = await chain.call({  input: `string` });\n\nconsole.log( res )\n\nres = await chain.call({  input: `no` });\n\nconsole.log( res )\n\nres = await chain.call({  input: `END` });\n\nconsole.log( res )"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "System: ",
-                                "As my typescript ASSISTANT expert in Zod notation.",
-                                "you MUST create the typescript code for creating an object schema following the template below:",
-                                "",
-                                "// beging template",
-                                "const schema = z.object(",
-                                "    // here the properties of the schema",
-                                ");",
-                                "// end template",
-                                "",
-                                "To do this you MUST start to ask interactively to the USER the properties attribute of the object schema following the process below",
-                                "",
-                                "1. ask for property name",
-                                "2. ask for property type",
-                                "3. ask if it is required or not",
-                                "",
-                                "continue until USER write \"END\" as property name.",
-                                "",
-                                "Human: let's start",
-                                "{",
-                                "  text: \"Sure, let's start.\\n\\nWhat is the name of the first property?\"",
-                                "}",
-                                "{ text: 'Great. What is the type of \"property1\"?' }",
-                                "{ text: 'Okay. Is \"property1\" a required property?' }",
-                                "{",
-                                "  text: 'Alright. \\n' +",
-                                "    '\\n' +",
-                                "    `Let's move on to the next property. What is the name of the next property? If you are done, please type \"`",
-                                "}",
-                                "{",
-                                "  text: 'Okay, here is the TypeScript code for creating an object schema using Zod:\\n' +",
-                                "    '\\n' +",
-                                "    '```typescript\\n' +",
-                                "    \"import { z } from 'zod';\\n\" +",
-                                "    '\\n' +",
-                                "    'const schema = z.object({\\n' +",
-                                "    '    property1: z.string().optional(),\\n' +",
-                                "    '});\\n' +",
-                                "    '```\\n' +",
-                                "    '\\n' +",
-                                "    'This schema defines an object with one property \"property1\" which is of type string and is not required.'",
-                                "}",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
