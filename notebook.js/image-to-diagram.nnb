@@ -1,0 +1,18 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\nconst image_url = \"https://res.cloudinary.com/practicaldev/image/fetch/s--B-s5n03y--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/bm8v47dhrqxagsd615q1.png\"\n// const image_url =  \"https://res.cloudinary.com/practicaldev/image/fetch/s--XN5WM5-1--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x21bjaiyzhbtz2p1t0t4.png\"\nconst prompt = \n`Translate diagram in image in a plantUML script following rules below:\n\n1. every rectangle or icon must be translate in plantuml rectangle element with related label if any\n2. every rectangle that contains other elements must be translated in plantuml rectangle {}  element\n`\nasync function main() {\n  const response = await openai.chat.completions.create({\n    model: \"gpt-4-vision-preview\",\n    max_tokens: 2000,\n    temperature: 0.5,\n    messages: [\n      {\n        role: \"user\",\n        content: [\n          { type: \"text\", text: prompt },\n          {\n            type: \"image_url\",\n            image_url: {\n              \"url\": image_url,\n            },\n          },\n        ],\n      },\n    ],\n  });\n  const content = response.choices[0].message.content;\n\n\n  console.log( content )\n}\n\nmain();"
+            ],
+            "outputs": []
+        }
+    ]
+}
