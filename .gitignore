@@ -3,3 +3,7 @@ examples/doc*.pdf
 node_modules/
 .env
 .venv
+.gitsecret/keys/random_seed
+!*.secret
+
+docs/PO/*.pdf
