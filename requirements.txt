@@ -1,5 +1,5 @@
 langchain
 openai
 #google-search-tools
-pdfminer.six
+pdfminer.six==20221105
 kor
