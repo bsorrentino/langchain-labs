@@ -7,3 +7,5 @@ node_modules/
 !*.secret
 
 docs/PO/*.pdf
+docs/volantino_ete_1.pdf
+docs/volantino_ete_1.png

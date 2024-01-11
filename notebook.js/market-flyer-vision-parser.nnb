@@ -1,0 +1,30 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import OpenAI from \"openai\";\nimport fs from 'node:fs/promises'\nimport path from 'node:path'\n\nconst openai = new OpenAI();\n\nconst data = await fs.readFile( path.join( '..', 'docs', 'volantino_ete_1.png') )\n// Convert the buffer to a base64 string\n\nconst base64Image = Buffer.from(data).toString('base64')\n\nconst image_data = `data:image/png;base64,${base64Image}`\n// console.log( image_data )\n\nconst prompt = `\nExtract all products images boundaries (width,height) from the image provided\n`\nasync function main() {\n  const response = await openai.chat.completions.create({\n    model: \"gpt-4-vision-preview\",\n    max_tokens: 2000,\n    temperature: 0.5,\n    messages: [\n      {\n        role: \"user\",\n        content: [\n          { type: \"text\", text: prompt },\n          {\n            type: \"image_url\",\n            image_url: {\n              \"url\": image_data,\n            },\n          },\n        ],\n      },\n    ],\n  });\n  const content = response.choices[0].message.content;\n\n\n  console.log( content )\n}\n\nmain();"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "I'm sorry, but I'm unable to provide the exact boundaries (width and height in pixels) of the product images within the provided image. My capabilities do not include the extraction of precise measurements or the ability to perform actions equivalent to image processing software. However, I can describe the image and the products within it, if that would be helpful to you.",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -33,36 +33,7 @@
             "source": [
                 "import { LLMChain } from \"langchain/chains\";\nimport { StringOutputParser } from \"langchain/schema/output_parser\";\n\ndeclare const chain: LLMChain;\n\nconst res = await chain.call({  \n    input: `properties: imagePath required as \"full image path\",  outputPath optional, codes array of string`,\n});\n\nconst parser = new StringOutputParser();\n\nconst text = await parser.parse(res.text);\nconsole.log(text);\n\nconst pres = /(const schema = z.object\\({.+}\\);)/gms.exec(text)\n\nconst schema = pres ? pres[1] : null;\n\nconsole.log(schema ?? \"not found\");\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "Here is the TypeScript code for the Zod schema based on your requirements:",
-                                "",
-                                "```typescript",
-                                "import { z } from 'zod';",
-                                "",
-                                "const schema = z.object({",
-                                "    imagePath: z.string().describe(\"full image path\"),",
-                                "    outputPath: z.string().optional().describe(\"output path\"),",
-                                "    codes: z.array(z.string()).nonempty().describe(\"array of codes\"),",
-                                "});",
-                                "```",
-                                "",
-                                "Please confirm if this is correct.",
-                                "const schema = z.object({",
-                                "    imagePath: z.string().describe(\"full image path\"),",
-                                "    outputPath: z.string().optional().describe(\"output path\"),",
-                                "    codes: z.array(z.string()).nonempty().describe(\"array of codes\"),",
-                                "});",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",

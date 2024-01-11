@@ -12,20 +12,7 @@
             "source": [
                 "import { Configuration, OpenAIApi } from \"openai\";\n\n\nconst configuration = new Configuration({\n  apiKey: process.env.OPENAI_API_KEY,\n});\n\nconst openai = new OpenAIApi(configuration);\n"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.error",
-                            "value": {
-                                "name": "TypeError",
-                                "message": "openai_1.Configuration is not a constructor",
-                                "stack": "    at <Cell 2> [4, 0]\n    at <Cell 2> [9, 46]\n    at Script.runInContext (node:vm:135:12)\n    at Script.runInNewContext (node:vm:140:17)\n    at Object.runInNewContext (node:vm:292:38)\n    at E (/Users/bsorrentino/.vscode/extensions/donjayamanne.typescript-notebook-3.0.1/out/extension/server/index.js:2:94622)\n    at t.execCode (/Users/bsorrentino/.vscode/extensions/donjayamanne.typescript-notebook-3.0.1/out/extension/server/index.js:2:95460)\n    at O.<anonymous> (/Users/bsorrentino/.vscode/extensions/donjayamanne.typescript-notebook-3.0.1/out/extension/server/index.js:2:102315)\n    at O.emit (node:events:517:28)\n    at O.emit (node:domain:489:12)"
-                            }
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         },
         {
             "language": "markdown",
