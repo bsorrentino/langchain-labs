@@ -1,4 +1,4 @@
-Unnamed: #,Customer,url
+Unnamed: 0,Customer,url
 0,888 US Services Inc.,https://www.dnb.com/business-directory/company-profiles.888_us_services_inc.3f41af79a09e80843b04f8143831890a.html
 1,"8x8, Inc.",https://www.8x8.com/
 2,Ablecom. Co. LTD,https://www.ablecom.com/
@@ -23,7 +23,7 @@ Unnamed: #,Customer,url
 21,AL FUTTAIM TECHNOLOGIES LLC,https://www.alfuttaim.com/real_estate/al-futtaim-technologies/
 22,Al Nafitha International Information Technology Company,
 23,Alcon Vision LLC,https://www.alcon.com/
-24,Aldar Properties PJSC,
+24,Aldar Properties PJSC,https://www.aldar.com/en/
 25,Algotech Customer Experience S.R.L,https://www.listafirme.ro/algotech-customer-experience-srl-47369412/
 26,Algotech Serbia,https://www.algotech.rs/
 27,Altivon,https://www.linkedin.com/company/altivon
@@ -53,7 +53,7 @@ Unnamed: #,Customer,url
 51,"Bestop, Inc.",https://www.bestop.com/
 52,BioNTech SE,https://www.biontech.com/int/en/home.html
 53,Bizmatica Sistemi S.p.a.,https://www.bizmatica.com/
-54,Black Box Technologies New Zealand Limited,
+54,Black Box Technologies New Zealand Limited,https://www.blackbox.com/en-us
 55,Blue Assistance S.p.A.,https://www.blueassistance.it/BLUE/
 56,Bon Secours Mercy Health,https://bsmhealth.org/
 57,Bonprix S.R.L.,
@@ -62,13 +62,13 @@ Unnamed: #,Customer,url
 60,Bright Health Management Inc.,https://brighthealthcare.com/
 61,Brinly Hardy Co.,https://brinly.com/
 62,British Telecommunications PLC,https://www.bt.com/about
-63,C1,
+63,C1,https://www.autoscout24.it/auto/citroen/citroen-c1/
 64,Call Center Resources FZ LLC,https://www.linkedin.com/company/call-center-resources-llc
 65,Callscan Australia Pty Ltd,https://www.dnb.com/business-directory/company-profiles.callscan_australia_pty_ltd.5018976e7b3a64ce8bd60990af333059.html
 66,CALLSCAN AUSTRALIA PTY. LTD.,https://www.dnb.com/business-directory/company-profiles.callscan_australia_pty_ltd.5018976e7b3a64ce8bd60990af333059.html
 67,Carahsoft Technology Corp,https://www.carahsoft.com/
-68,"Carestream Health, Inc.",
-69,CCR FZ LLC,
+68,"Carestream Health, Inc.",https://www.carestream.com/en/us/
+69,CCR FZ LLC,https://ccr.group/en/contact/
 70,"CenExel Clinical Research, Inc.",https://cenexelresearch.com/cns/
 71,CGI France SAS,https://www.cgi.com/france/fr-fr
 72,CGI Group Inc.,https://www.cgi.com/italy/it
@@ -86,15 +86,15 @@ Unnamed: #,Customer,url
 84,Cognizant Technology Solutions U.S. Corporation,https://www.cognizant.com/us/en
 85,ComApp S.r.l,https://www.comapp.it/
 86,Computershare Technology Services (UK) Limited,https://www.computershare.com/uk
-87,Conn3ct (Connect Managed Services (UK) Limited),
+87,Conn3ct (Connect Managed Services (UK) Limited),https://find-and-update.company-information.service.gov.uk/company/02557464
 88,Connect (Connect Managed Services (UK) Limited),
 89,CONNECT SA OPCO (PTY) LTD,https://www.g2.com/products/connect-sa-opco-pty-ltd/competitors/alternatives
 90,"Consumer Safety Technology, LLC",
 91,"ConvergeOne, Inc.",https://www.onec1.com/
 92,Cooperatieve Rabobank U.A.,https://www.rabobank.com/
 93,COSMOTE - Mobile Telecommunications S.A.,https://www.cosmote.gr/cs/otegroup/en/cosmote_ae.html
-94,Cosmote Mobile Telecommunications S.A.Ã,
-95,Cosmote Mobile Telecommunications Single Member S.A.Ã,
+94,Cosmote Mobile Telecommunications S.A.ÃÂ,
+95,Cosmote Mobile Telecommunications Single Member S.A.ÃÂ,
 96,Cosmote SA,https://www.cosmote.gr/cs/otegroup/en/cosmote_ae.html
 97,CoverApps,https://www.coverapp.it/
 98,"Cox Automotive Corporate Services, LLC",https://www.coxautoinc.com/
@@ -123,9 +123,9 @@ Unnamed: #,Customer,url
 121,ESRI,https://www.esri.com/it-it/home
 122,Ethan Global Pty Ltd (t/a Ethan),https://ethan.global/
 123,Eventus Solutions Group,https://eventusg.com/
-124,Everlon Corporation,
-125,"Evolutio Cloud Enabler, S.A.",
-126,Export Development Canada,
+124,Everlon Corporation,https://www.everloncorp.com/
+125,"Evolutio Cloud Enabler, S.A.",https://www.evolutio.com/en/
+126,Export Development Canada,https://www.edc.ca/
 127,EY Global Services Limited,https://www.ey.com/en_gl
 128,Fiebig GmbH,https://fiebig.com/
 129,FLIGHT CENTRE TRAVEL GROUP LIMITED,https://www.fctgl.com/
@@ -156,10 +156,10 @@ Unnamed: #,Customer,url
 154,In Motion Servicios S.A.,https://grupoinmotion.com/
 155,"Independent Health Association, Inc.",https://www.independenthealth.com/home
 156,Indra Italia spa,https://www.indracompany.com/en/pais/italy
-157,"INDRA SISTEMAS MÂXICO, S.A. DE C.V.,",https://www.indracompany.com/en/
-158,"Indra Soluciones TecnologÂas de la InformaciÂn, S.L.",
+157,"INDRA SISTEMAS MÃÂXICO, S.A. DE C.V.,",https://www.indracompany.com/en/
+158,"Indra Soluciones TecnologÃÂas de la InformaciÃÂn, S.L.",
 159,INDRA SOLUCIONES TI S.L.,https://www.indracompany.com/
-160,"Inetum EspaÂa, S.A.U.",https://www.inetum.com/es/espana
+160,"Inetum EspaÃÂa, S.A.U.",https://www.inetum.com/es/espana
 161,Inetum SA,https://www.inetum.com/en/homepage
 162,InfinIT.cx GmbH,
 163,Inflow Communications,https://inflowcx.com/
@@ -175,14 +175,14 @@ Unnamed: #,Customer,url
 173,Interaxa S.A.,https://www.linkedin.com/company/interaxa
 174,Intracom S.A. Telecom Solutions,https://www.intracom-telecom.com/
 175,INTRACOM SINGLE MEMBER S.A. TELECOM SOLUTIONS.,https://www.intracom-telecom.com/
-176,IP Integration Limited,
-177,IREN S.p.A.,
-178,IST Egypt,
+176,IP Integration Limited,https://ipintegration.com/
+177,IREN S.p.A.,https://www.gruppoiren.it/
+178,IST Egypt,https://www.istnetworks.com/
 179,IST Integration Services And Technologies Co.,https://www.istnetworks.com/
 180,ITNAV-Pro Ltd.,
 181,ITNavPro,https://itnavpro.com/
 182,"J. B. Hunt Transport, Inc.",https://www.jbhunt.com/
-183,Johnson & Johnson,
+183,Johnson & Johnson,https://it.wikipedia.org/wiki/Boris_Johnson
 184,"Johnson & Johnson Services, Inc.",https://it.wikipedia.org/wiki/Boris_Johnson
 185,Just Retirement Management Services Limited,https://www.wearejust.co.uk/just-group-of-companies/
 186,Kansas City Chiefs,https://www.huddle.org/2024/01/wild-card-2023-dominio-assoluto-nel-gelo-glaciale-miami-dolphins-vs-kansas-city-chiefs-7-26/
@@ -190,7 +190,7 @@ Unnamed: #,Customer,url
 188,Kerv Experience Limited,https://kerv.com/
 189,KHIDMAH SOLE PROPRIETORSHIP LLC,https://www.khidmah.com/en
 190,Knauf Information Services GmbH,
-191,Konecta GestiÂn Integral de Procesos SL,https://www.konecta-group.com/
+191,Konecta GestiÃÂn Integral de Procesos SL,https://www.konecta-group.com/
 192,"Kore.ai, Inc",https://kore.ai/
 193,Kornit Digital Ltd,https://www.kornit.com/it/
 194,KPN B.V.,https://www.kpn.com/
@@ -225,7 +225,7 @@ Unnamed: #,Customer,url
 223,NTT France SASU,https://www.bloomberg.com/profile/company/4692281Z:FP
 224,NTT Germany AG & Co. KG,
 225,NTT Hungary Trading and Service Ltd,https://partners.fireeye.com/directory/partner/368550/ntt-hungary-trading-and-services-ltd
-226,NTT Italia S.P.A.,
+226,NTT Italia S.P.A.,https://it.nttdata.com/
 227,NTT Malaysia Solutions Sdn Bhd,https://www.nttdata.com/my/en
 228,NTT Netherlands B.V.,https://www.bloomberg.com/profile/company/3813952Z:NA
 229,NTT Singapore Pte. Ltd,https://www.nttdata.com/sg/en
@@ -273,7 +273,7 @@ Unnamed: #,Customer,url
 271,Protiviti Member Firm Peru SAC,https://protivitiperu.com/
 272,Providence Health & Services,https://www.providence.org/
 273,Provis Real Estate Management - Sole Proprietorship LLC,https://www.provis.ae/en
-274,Provis Realestate Management - Sole Proprietorship LLC,
+274,Provis Realestate Management - Sole Proprietorship LLC,https://www.provis.ae/en
 275,Proximus PLC,https://www.proximus.com/
 276,Pyrios Limited,https://find-and-update.company-information.service.gov.uk/company/09935127
 277,Radiant Communication Sdn.Bhd.,
@@ -282,7 +282,7 @@ Unnamed: #,Customer,url
 280,Rush System for Health d/b/a Rush University System for Health,https://www.rush.edu/
 281,SABIO FRANCE SAS,https://www.ripe.net/membership/indices/data/fr.coverage.html
 282,SABIO FRANCE SAS - DO NOT USE,https://sabiogroup.com/news/sabio-group-acquires-coverage-group-france
-283,"Sabio IbÂrica, S.A.",
+283,"Sabio IbÃÂrica, S.A.",
 284,Sabio Ltd,https://www.sabiogroup.com/node/1
 285,Sabre GLBL Inc,https://www.sabre.com/
 286,"SAFG Technologies, LLC",https://opencorporates.com/companies/us_oh/4860345
@@ -291,13 +291,13 @@ Unnamed: #,Customer,url
 289,"Santander Bank, N.A.",https://www.santanderbank.com/
 290,SCAN HEALTH PLAN,https://www.scanhealthplan.com/
 291,Servion Global Solutions Private Limited,https://servion.com/
-292,Servion T Global Solutions Limited,
+292,Servion T Global Solutions Limited,https://servion.com/
 293,Shanghai Dhaben InfoTech Co Ltd,https://www.howaygis.com/en
 294,Siemens Healthcare GmbH,https://www.siemens-healthineers.com/
 295,Siemens Healthineers AG,https://www.siemens-healthineers.com/
-296,Silver Chain,
-297,SITA Switzerland Sarl,
-298,Sixbell Peru S.A.C,
+296,Silver Chain,https://www.google.com/search?sca_esv=598813290&q=Silver+Chain&tbm=isch&source=univ&fir=RUPz-3INEbzUCM%252C5E3kG4hOUdzYxM%252C_%253B1BJy7-w_L0NkgM%252Cpu6EBnWvROsSrM%252C_%253B8i0p7UqFzetdrM%252C-ywxdNOOEbsJbM%252C_%253BNIssAdL2w7cIyM%252CK_K6Htr6P0J1VM%252C_%253BoaOdUlfHF5B9pM%252Ct_EqSgPZXXzCHM%252C_%253Bru94pm5HPEiFRM%252Cpfs1NUBbswximM%252C_%253B7MaOEhXQxA6yCM%252CLEYgZlijGh9PnM%252C_%253BUlg0LDD-CI5fBM%252COrF8j50tF7HNoM%252C_%253BAOtafY7gUmaHEM%252CL19CLVE2EFQtEM%252C_%253BJzk5aMseXwiLRM%252Cw9HtpL_nydBZQM%252C_%253Bck8YohRu23Kk8M%252C7Cpr80lXU02cwM%252C_%253Brz35cVMvf9F7sM%252C8TYvNdAM15fYmM%252C_%253BtJYg65yOl3CegM%252CIbFxxs3epFw49M%252C_%253BzM82oHvXmKwYFM%252CDpuxhScqcszr-M%252C_%253BSvw7_0o3SwRxMM%252CfOeSmpLqzhqzjM%252C_%253BqMmeHHHRPCJ6JM%252CRD-rd9XBP00ExM%252C_%253BgwE31G5P5MA_WM%252CGsc0aY1rNHGWtM%252C_%253BREH0exanW_X8aM%252Cp3hQBSRAhRdXKM%252C_&usg=AI4_-kQ70hSyjmJ6w59-9sdfb3dQDHu9kA
+297,SITA Switzerland Sarl,https://www.sita.aero/
+298,Sixbell Peru S.A.C,https://sixbell.com/
 299,Sixtra Chile S.A.,https://www.emis.com/php/company-profile/CL/Sixtra_Chile_Sa__Sixbell__en_3317563.html
 300,Skylux Telelink Pvt Ltd - India,https://skyluxinc.com/
 301,Smart Service Queensland,https://www.smartservice.qld.gov.au/payment/cart/b65b2f5e-7c08-4a14-b48f-2700de8fe663/view
@@ -317,7 +317,7 @@ Unnamed: #,Customer,url
 315,Tata Communications Limited,https://www.tatacommunications.com/
 316,Tekglide Inc,https://tekglide.com/
 317,Telconet S.A.,https://www.telconet.net/
-318,Telefonica Soluciones de Informatica Y Comunicaciones De EspaÂa SAU,https://www.einforma.com/informacion-empresa/telefonica-soluciones-informatica-comunicaciones-espana
+318,Telefonica Soluciones de Informatica Y Comunicaciones De EspaÃÂa SAU,https://www.einforma.com/informacion-empresa/telefonica-soluciones-informatica-comunicaciones-espana
 319,Telenet BV,https://www.telenet.be/
 320,Telenet BVBA,https://www.telenet.be/
 321,Telstra Singapore Pte Ltd,https://www.telstra.com.sg/
@@ -363,9 +363,9 @@ Unnamed: #,Customer,url
 361,Wesal Information Technology Co.,
 362,Wescom Central Credit Union,https://wescom.org/
 363,Weyerhaeuser NR Company,https://www.weyerhaeuser.com/
-364,WHIRLPOOL CORPORATION,
+364,WHIRLPOOL CORPORATION,https://www.whirlpoolcorp.com/
 365,Whirlpool UK Appliances Ltd.,https://www.whirlpool.co.uk/
 366,Wipro Limited,https://www.wipro.com/
 367,WTI Holdings LLC,https://www.dnb.com/business-directory/company-profiles.wti_holdings_llc.330ba10b95fc2245ab2812ee2ce05eef.html
 368,Ypiresia 800 - Teleperformance Single Member S.A,https://www.hithorizons.com/eu/companies/H-GR0003778169/ypiresia-800-teleperformance-single-member-sa
-369,ZIM Integrated Shipping Services,
+369,ZIM Integrated Shipping Services,https://www.zim.com/
