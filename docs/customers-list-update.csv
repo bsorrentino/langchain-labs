@@ -93,8 +93,8 @@ Unnamed: 0,Customer,url,industry
 91,"ConvergeOne, Inc.",https://www.onec1.com/,Information technology services industry.
 92,Cooperatieve Rabobank U.A.,https://www.rabobank.com/,Banking and financial services industry.
 93,COSMOTE - Mobile Telecommunications S.A.,https://www.cosmote.gr/cs/otegroup/en/cosmote_ae.html,Telecommunications industry
-94,Cosmote Mobile Telecommunications S.A.,,unknown
-95,Cosmote Mobile Telecommunications Single Member S.A.,,unknown
+94,Cosmote Mobile Telecommunications S.A.,https://www.cosmote.gr/cs/otegroup/en/cosmote_ae.html,Telecommunications industry
+95,Cosmote Mobile Telecommunications Single Member S.A.,https://www.cosmote.gr/cs/otegroup/en/cosmote_ae.html,Telecommunications industry.
 96,Cosmote SA,https://www.cosmote.gr/cs/otegroup/en/cosmote_ae.html,Telecommunications industry
 97,CoverApps,https://www.coverapp.it/,Insurance Technology (Insurtech) Industry.
 98,"Cox Automotive Corporate Services, LLC",https://www.coxautoinc.com/,Automotive industry
@@ -157,9 +157,9 @@ Unnamed: 0,Customer,url,industry
 155,"Independent Health Association, Inc.",https://www.independenthealth.com/home,Health insurance industry.
 156,Indra Italia spa,https://www.indracompany.com/en/pais/italy,Software development industry.
 157,"INDRA SISTEMAS MEXICO, S.A. DE C.V.,",https://www.indracompany.com/en/,"Technology, Information Technology, Defense and Aerospace"
-158,"Indra Soluciones Tecnologias de la Informacion, S.L.",,unknown
+158,"Indra Soluciones Tecnologias de la Informacion, S.L.",https://www.indracompany.com/,Information technology industry.
 159,INDRA SOLUCIONES TI S.L.,https://www.indracompany.com/,"Professional, Scientific, and Technical Services."
-160,"Inetum Espana, S.A.U.",https://www.inetum.com/es/espana,unknown
+160,"Inetum Espana, S.A.U.",https://www.inetum.com/es/espana,"IT Services, Digital Solutions, Consulting"
 161,Inetum SA,https://www.inetum.com/en/homepage,"IT services industry, digital services industry, computer consulting industry, systems integration industry, accounting and finance software industry, telecommunications industry, logistics industry."
 162,InfinIT.cx GmbH,https://www.infinit.cx/,"Consulting, Customer Experience Management, Information Technology, Service Provider."
 163,Inflow Communications,https://inflowcx.com/,"Unified communications, contact center support services, cloud consulting, customer experience, managed services, strategic advisory."
@@ -190,7 +190,7 @@ Unnamed: 0,Customer,url,industry
 188,Kerv Experience Limited,https://kerv.com/,"Consultancy, IT projects, Digital transformation, Managed services, Cloud CX specialists, AI-powered video technology."
 189,KHIDMAH SOLE PROPRIETORSHIP LLC,https://www.khidmah.com/en,"Facility Management, Property Solutions, Corporate Intelligence Services."
 190,Knauf Information Services GmbH,https://knauf.com/,Construction materials industry.
-191,Konecta Gestion Integral de Procesos SL,https://www.konecta-group.com/,unknown
+191,Konecta Gestion Integral de Procesos SL,https://www.konecta-group.com/,"Telemarketing industry, Business Process Outsourcing (BPO) industry."
 192,"Kore.ai, Inc",https://kore.ai/,"Conversational AI, Virtual Assistants, Enterprise Chatbots."
 193,Kornit Digital Ltd,https://www.kornit.com/it/,"Printing industry, digital printing industry, textile industry."
 194,KPN B.V.,https://www.kpn.com/,"Telecommunications industry, ICT industry."
@@ -282,7 +282,7 @@ Unnamed: 0,Customer,url,industry
 280,Rush System for Health d/b/a Rush University System for Health,https://www.rush.edu/,Healthcare industry
 281,SABIO FRANCE SAS,https://www.ripe.net/membership/indices/data/fr.coverage.html,"Customer experience technology industry, communications technology industry, data and information industry, network infrastructure industry, IT services industry."
 282,SABIO FRANCE SAS - DO NOT USE,https://sabiogroup.com/news/sabio-group-acquires-coverage-group-france,Customer experience and communications technology industry.
-283,"Sabio Iberica, S.A.",,unknown
+283,"Sabio Iberica, S.A.",https://sabiogroup.com/es,"Technology industry, specifically in digital experience transformation services, AI and automation, data and insight, cloud transformation, and networking services."
 284,Sabio Ltd,https://www.sabiogroup.com/node/1,"Telecommunications, Digital Customer Experience, Contact Center Services."
 285,Sabre GLBL Inc,https://www.sabre.com/,"Technology, Travel and Tourism, Information Technology, Software Development."
 286,"SAFG Technologies, LLC",https://opencorporates.com/companies/us_oh/4860345,"Insurance, Retirement Solutions, Electronic Security Systems."
@@ -317,7 +317,7 @@ Unnamed: 0,Customer,url,industry
 315,Tata Communications Limited,https://www.tatacommunications.com/,Telecommunications industry.
 316,Tekglide Inc,https://tekglide.com/,"E-commerce industry, digital consulting industry, web development industry, online reputation management industry, cybersecurity industry."
 317,Telconet S.A.,https://www.telconet.net/,"Telecommunications industry, Technology services industry, Data center industry, Managed services industry."
-318,Telefonica Soluciones de Informatica Y Comunicaciones De Espaa SAU,https://www.einforma.com/informacion-empresa/telefonica-soluciones-informatica-comunicaciones-espana,unknown
+318,Telefonica Soluciones de Informatica Y Comunicaciones De Espana SAU,https://www.einforma.com/informacion-empresa/telefonica-soluciones-informatica-comunicaciones-espana,unknown
 319,Telenet BV,https://www.telenet.be/,Telecommunications industry.
 320,Telenet BVBA,https://www.telenet.be/,"Telecommunications, Cable television, Broadband Internet services."
 321,Telstra Singapore Pte Ltd,https://www.telstra.com.sg/,"Telecommunications industry, IT consulting industry, Business consulting industry."
