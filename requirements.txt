@@ -1,5 +1,9 @@
 langchain
 openai
-#google-search-tools
 pdfminer.six==20221105
 kor
+google-api-python-client
+#google-search-tools
+#pandas
+#requests 
+beautifulsoup4
