@@ -155,9 +155,9 @@
             "outputs": []
         },
         {
-            "language": "typescript",
+            "language": "javascript",
             "source": [
-                ""
+                "import path from 'node:path'\n\n// Function to replace the file extension\nfunction replaceFileExtension(filePath, newExtension) {\n    const parsedPath = path.parse(filePath);\n\n    parsedPath.base = `${parsedPath.name}${newExtension}`;\n\n    // Return the new path\n    return path.format( parsedPath );\n}\n\n// Example usage\nconst originalFilePath = 'example/test.txt';\nconst newFilePath = replaceFileExtension(originalFilePath, '.md');\n\nconsole.log(newFilePath); // Outputs: example/test.md\n"
             ],
             "outputs": []
         }
