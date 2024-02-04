@@ -1,0 +1,38 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })\n\n// \"https://<resource>.search.windows.net/\"\nconst endpoint = process.env.AZURE_AISEARCH_ADDRESS\nconst apikey = process.env.AZURE_AISEARCH_API_KEY"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { SearchClient, SearchIndexClient, SearchIndexerClient, AzureKeyCredential } from \"@azure/search-documents\";\n  \ndeclare const apikey:string\ndeclare const endpoint:string\n\n  // To query and manipulate documents\n  const searchClient = new SearchClient(\n    endpoint,\n    \"langchain-vector-demo\",\n    new AzureKeyCredential(apikey)\n  );\n  \n  // To manage indexes and synonymmaps\n  const indexClient = new SearchIndexClient(endpoint, new AzureKeyCredential(apikey));\n  \n  // To manage indexers, datasources and skillsets\n  const indexerClient = new SearchIndexerClient(endpoint, new AzureKeyCredential(apikey));"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import {  SearchIndexClient, AzureKeyCredential } from \"@azure/search-documents\";\n\ndeclare const apikey:string\ndeclare const endpoint:string\n\nconst client = new SearchIndexClient(endpoint, new AzureKeyCredential(apikey));\n\nasync function main() {\n  const result = await client.createIndex({\n    name: \"langchain-search-index\",\n    fields: [\n      {\n        type: \"Edm.String\",\n        name: \"id\",\n        key: true,\n      },\n      {\n        type: \"Edm.Double\",\n        name: \"content\"\n      },\n      {\n        type: \"Edm.String\",\n        name: \"metadata\"\n      },\n      {\n        type: \"Edm.ComplexType\",\n        name: \"content_vector\",\n        fields: [\n          {\n            type: \"Collection(Edm.Single)\",\n            name: \"vectors\",\n            searchable: true,\n          },\n        ],\n      },\n    ],\n  });\n\n  console.log(result);\n}\n\nmain();"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "RestError",
+                                "message": "The request is invalid. Details: definition : The vector field 'vectors' must have the properties 'dimensions' and 'vectorSearchConfiguration' set.",
+                                "stack": "    at handleErrorResponse (/Users/bsorrentino/WORKSPACES/GITHUB.me/AI/langchain-labs/langchain-labs_main/node_modules/@azure/core-client/src/deserializationPolicy.ts:255:17)\n    at deserializeResponseBody (/Users/bsorrentino/WORKSPACES/GITHUB.me/AI/langchain-labs/langchain-labs_main/node_modules/@azure/core-client/src/deserializationPolicy.ts:159:43)\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

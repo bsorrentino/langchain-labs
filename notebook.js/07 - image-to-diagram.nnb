@@ -1,0 +1,64 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import  OpenAI from \"openai\";\nimport fs from 'node:fs/promises'\nimport path from 'node:path'\n\nconst openai = new OpenAI();\n\nconst image_url = \"https://res.cloudinary.com/practicaldev/image/fetch/s--B-s5n03y--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/bm8v47dhrqxagsd615q1.png\"\n// const image_url =  \"https://res.cloudinary.com/practicaldev/image/fetch/s--XN5WM5-1--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x21bjaiyzhbtz2p1t0t4.png\"\n\nconst data = await fs.readFile( path.join( '..', 'docs', 'rag-query.png') )\n// Convert the buffer to a base64 string\n\nconst base64Image = Buffer.from(data).toString('base64')\n\nconst image_data = `data:image/png;base64,${base64Image}`\n// console.log( image_data )\n\nconst prompt = `\nTranslate diagram in image in a plantUML script following rules below:\n\n1. every rectangle or icon must be translate in plantuml rectangle element with related label if any\n2. every rectangle that contains other elements must be translated in plantuml rectangle {}  element\n`\nasync function main() {\n  const response = await openai.chat.completions.create({\n    model: \"gpt-4-vision-preview\",\n    max_tokens: 2000,\n    temperature: 0.5,\n    messages: [\n      {\n        role: \"user\",\n        content: [\n          { type: \"text\", text: prompt },\n          {\n            type: \"image_url\",\n            image_url: {\n              \"url\": image_data,\n            },\n          },\n        ],\n      },\n    ],\n  });\n  const content = response.choices[0].message.content;\n\n\n  console.log( content )\n}\n\nmain();"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "Below is the PlantUML script that represents the diagram in the image provided:",
+                                "",
+                                "```plantuml",
+                                "@startuml",
+                                "",
+                                "rectangle \"USER\" as USER",
+                                "",
+                                "rectangle \"EMBEDDING\\nMODEL\" as EMBEDDING_MODEL {",
+                                "}",
+                                "",
+                                "rectangle \"VECTOR DATABASE\" as VECTOR_DATABASE {",
+                                "}",
+                                "",
+                                "rectangle \"GENERATIVE\\nMODEL\" as GENERATIVE_MODEL {",
+                                "}",
+                                "",
+                                "rectangle \"VOLVO USERS\\nMANUAL\" as VOLVO_USERS_MANUAL",
+                                "",
+                                "rectangle \"DOCUMENTS\" as DOCUMENTS {",
+                                "}",
+                                "",
+                                "rectangle \"EMBEDDING\\nMODEL\" as EMBEDDING_MODEL2 {",
+                                "}",
+                                "",
+                                "USER -right-> EMBEDDING_MODEL : QUERY",
+                                "EMBEDDING_MODEL -right-> VECTOR_DATABASE : QUERY\\n+ EMBEDDING",
+                                "VECTOR_DATABASE -right-> GENERATIVE_MODEL : QUERY\\n+ CONTEXT",
+                                "GENERATIVE_MODEL -right-> USER",
+                                "DOCUMENTS -up-> VECTOR_DATABASE : EMBEDDINGS\\n+METADATA",
+                                "VOLVO_USERS_MANUAL -right-> DOCUMENTS",
+                                "",
+                                "@enduml",
+                                "```",
+                                "",
+                                "Please note that the arrows and labels have been translated as direct connections between the elements. The \"EMBEDDING MODEL\" appears twice in the diagram, so it has been represented twice in the script as `EMBEDDING_MODEL` for the first instance and `EMBEDDING_MODEL2` for the second to avoid confusion. The labels on the arrows have been added as comments next to the connections. The script assumes that the direction of the arrows follows the flow from left to right and from bottom to top as in the original diagram.",
+                                ""
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

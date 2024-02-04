@@ -1,13 +1,6 @@
 {
     "cells": [
         {
-            "language": "typescript",
-            "source": [
-                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })"
-            ],
-            "outputs": []
-        },
-        {
             "language": "markdown",
             "source": [
                 "define prompts"

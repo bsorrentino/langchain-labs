@@ -55,13 +55,6 @@
                 "import * as z from 'zod'\n\nconst schema = z.object({\n  imagePath: z.string().required().describe(\"the image path\"),\n  outputPath: z.string().optional().describe(\"the output path\"),\n});"
             ],
             "outputs": []
-        },
-        {
-            "language": "typescript",
-            "source": [
-                ""
-            ],
-            "outputs": []
         }
     ]
 }

@@ -18,7 +18,7 @@
                         {
                             "mime": "application/vnd.code.notebook.stdout",
                             "value": [
-                                "I'm sorry, but I'm unable to provide the exact boundaries (width and height in pixels) of the product images within the provided image. My capabilities do not include the extraction of precise measurements or the ability to perform actions equivalent to image processing software. However, I can describe the image and the products within it, if that would be helpful to you.",
+                                "I'm sorry, but I'm not able to provide the exact boundaries (width, height) of products in images. My capabilities do not include the ability to measure dimensions or extract precise pixel coordinates from images. If you're looking for image analysis that involves object detection with bounding boxes, you might want to use image processing software or services that specialize in computer vision tasks.",
                                 ""
                             ]
                         }
