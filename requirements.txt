@@ -1,5 +1,6 @@
 langchain
-openai
+langchain-openai
+# openai
 pdfminer.six==20221105
 kor
 google-api-python-client

@@ -10,7 +10,14 @@
         {
             "language": "typescript",
             "source": [
-                "import  OpenAI from \"openai\";\nimport fs from 'node:fs/promises'\nimport path from 'node:path'\n\nconst openai = new OpenAI();\n\nconst image_url = \"https://res.cloudinary.com/practicaldev/image/fetch/s--B-s5n03y--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/bm8v47dhrqxagsd615q1.png\"\n// const image_url =  \"https://res.cloudinary.com/practicaldev/image/fetch/s--XN5WM5-1--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x21bjaiyzhbtz2p1t0t4.png\"\n\nconst data = await fs.readFile( path.join( '..', 'docs', 'rag-query.png') )\n// Convert the buffer to a base64 string\n\nconst base64Image = Buffer.from(data).toString('base64')\n\nconst image_data = `data:image/png;base64,${base64Image}`\n// console.log( image_data )\n\nconst prompt = `\nTranslate diagram in image in a plantUML script following rules below:\n\n1. every rectangle or icon must be translate in plantuml rectangle element with related label if any\n2. every rectangle that contains other elements must be translated in plantuml rectangle {}  element\n`\nasync function main() {\n  const response = await openai.chat.completions.create({\n    model: \"gpt-4-vision-preview\",\n    max_tokens: 2000,\n    temperature: 0.5,\n    messages: [\n      {\n        role: \"user\",\n        content: [\n          { type: \"text\", text: prompt },\n          {\n            type: \"image_url\",\n            image_url: {\n              \"url\": image_data,\n            },\n          },\n        ],\n      },\n    ],\n  });\n  const content = response.choices[0].message.content;\n\n\n  console.log( content )\n}\n\nmain();"
+                "import  OpenAI from \"openai\";\n\nconst openai = new OpenAI();\n\n// const image_url = \"https://res.cloudinary.com/practicaldev/image/fetch/s--B-s5n03y--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/bm8v47dhrqxagsd615q1.png\"\n// const image_url =  \"https://res.cloudinary.com/practicaldev/image/fetch/s--XN5WM5-1--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_800/https://dev-to-uploads.s3.amazonaws.com/uploads/articles/x21bjaiyzhbtz2p1t0t4.png\"\n\nconst prompt = `\nTranslate diagram in image in a plantUML script following rules below:\n\n1. every rectangle or icon must be translate in plantuml rectangle element with related label if any\n2. every rectangle that contains other elements must be translated in plantuml rectangle {}  element\n`\nasync function converImageToDiagram( image_url_or_data:string ) {\n  const response = await openai.chat.completions.create({\n    model: \"gpt-4-vision-preview\",\n    max_tokens: 2000,\n    temperature: 0.5,\n    messages: [\n      {\n        role: \"user\",\n        content: [\n          { type: \"text\", text: prompt },\n          {\n            type: \"image_url\",\n            image_url: {\n              \"url\": image_url_or_data,\n            },\n          },\n        ],\n      },\n    ],\n  });\n  const content = response.choices[0].message.content;\n\n\n  return content\n}\n\n"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "declare  function converImageToDiagram( image_url_or_data:string ):Promise<string>\n\n// import {createInterface} from 'node:readline/promises'\n// import { stdin as input, stdout as output } from 'node:process'\n// const rl = createInterface( {input, output} )\n// const filePath = await rl.question( 'image file')\n\nimport * as fs from 'node:fs/promises'\nimport path from 'node:path'\n\nconst filePath = \"/Users/bsorrentino/WORKSPACES/GITHUB.me/bsorrentino/bsorrentino#gh-pages/_draft/Datastax-langchain-architecture-design-guide/img_p3_1.png\"\nconst fileData = await fs.readFile( path.join( filePath) )\n// Convert the buffer to a base64 string\n\nconst base64Image = Buffer.from(fileData).toString('base64')\n\nconst imageData = `data:image/png;base64,${base64Image}`\n\nconst plantUml = await converImageToDiagram( imageData )\n\nconsole.log( plantUml )"
             ],
             "outputs": [
                 {
@@ -18,41 +25,55 @@
                         {
                             "mime": "application/vnd.code.notebook.stdout",
                             "value": [
-                                "Below is the PlantUML script that represents the diagram in the image provided:",
+                                "Certainly! Below is the PlantUML script representing the diagram in the image provided:",
                                 "",
                                 "```plantuml",
                                 "@startuml",
                                 "",
-                                "rectangle \"USER\" as USER",
+                                "rectangle \"Event Stream\" as EventStream",
                                 "",
-                                "rectangle \"EMBEDDING\\nMODEL\" as EMBEDDING_MODEL {",
+                                "rectangle StreamProcessor {",
+                                "    rectangle \"Preprocessing\" as Preprocessing",
+                                "    rectangle \"LLM Application\" as LLMApplication",
+                                "    rectangle \"Postprocessing\" as Postprocessing",
                                 "}",
                                 "",
-                                "rectangle \"VECTOR DATABASE\" as VECTOR_DATABASE {",
+                                "rectangle \"Output\" as Output",
+                                "",
+                                "rectangle Observability {",
+                                "    note right of Observability",
+                                "        Metrics, Logs, etc.",
+                                "    end note",
                                 "}",
                                 "",
-                                "rectangle \"GENERATIVE\\nMODEL\" as GENERATIVE_MODEL {",
+                                "rectangle LLMService {",
+                                "    note right of LLMService",
+                                "        eg., OpenAI",
+                                "    end note",
                                 "}",
                                 "",
-                                "rectangle \"VOLVO USERS\\nMANUAL\" as VOLVO_USERS_MANUAL",
-                                "",
-                                "rectangle \"DOCUMENTS\" as DOCUMENTS {",
+                                "rectangle LLMTracing {",
+                                "    note right of LLMTracing",
+                                "        eg., LangSmith",
+                                "    end note",
                                 "}",
                                 "",
-                                "rectangle \"EMBEDDING\\nMODEL\" as EMBEDDING_MODEL2 {",
-                                "}",
+                                "EventStream -right-> Preprocessing",
+                                "Preprocessing -right-> LLMApplication",
+                                "LLMApplication -right-> Postprocessing",
+                                "Postprocessing -right-> Output",
+                                "LLMApplication -down-> LLMService",
+                                "LLMApplication -down-> LLMTracing",
+                                "LLMApplication -up-> Observability",
                                 "",
-                                "USER -right-> EMBEDDING_MODEL : QUERY",
-                                "EMBEDDING_MODEL -right-> VECTOR_DATABASE : QUERY\\n+ EMBEDDING",
-                                "VECTOR_DATABASE -right-> GENERATIVE_MODEL : QUERY\\n+ CONTEXT",
-                                "GENERATIVE_MODEL -right-> USER",
-                                "DOCUMENTS -up-> VECTOR_DATABASE : EMBEDDINGS\\n+METADATA",
-                                "VOLVO_USERS_MANUAL -right-> DOCUMENTS",
+                                "note top of StreamProcessor",
+                                "    eg., Kafka Consumer, Celery, RabbitMQ, SQS",
+                                "end note",
                                 "",
                                 "@enduml",
                                 "```",
                                 "",
-                                "Please note that the arrows and labels have been translated as direct connections between the elements. The \"EMBEDDING MODEL\" appears twice in the diagram, so it has been represented twice in the script as `EMBEDDING_MODEL` for the first instance and `EMBEDDING_MODEL2` for the second to avoid confusion. The labels on the arrows have been added as comments next to the connections. The script assumes that the direction of the arrows follows the flow from left to right and from bottom to top as in the original diagram.",
+                                "This script represents the elements as rectangles and includes the labels and notes as seen in the diagram. The arrows indicate the direction of the flow from one process to another, and the notes provide additional information about specific elements.",
                                 ""
                             ]
                         }
