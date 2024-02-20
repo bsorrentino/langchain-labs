@@ -31,21 +31,9 @@
         {
             "language": "typescript",
             "source": [
-                "import { ChatPromptTemplate } from \"@langchain/core/prompts\";\nimport { ChatOpenAI } from \"@langchain/openai\";\nimport {  createOpenAIFnRunnable } from \"langchain/chains/openai_functions\";\nimport { JsonOutputFunctionsParser } from \"langchain/output_parsers\";\nimport type { FunctionDefinition } from \"@langchain/core/language_models/base\";\n\n\ndeclare const function_descriptions: FunctionDefinition[]\n\nconst user_query = [\n  \"let import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo' as unmanaged\",\n  \"how in javascript can iterate over an array\",\n  \"how in javascript can iterate over an array and import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo'\"\n]\n\nconst model = new ChatOpenAI({ \n  // model: \"gpt-35-turbo-0613\"\n});\n\nconst prompt = ChatPromptTemplate.fromMessages([\n  [\"human\", \"Human description: {description}\"],\n]);\n\nconst outputParser = new JsonOutputFunctionsParser();\n\nconst runnable = createOpenAIFnRunnable({\n  functions: function_descriptions,\n  llm: model,\n  prompt,\n  outputParser,\n});\n\nconst response = await runnable.invoke({\n  description: user_query[0],\n});\n\nconsole.log(response);\n/*\n  { name: 'John Doe', age: 30, fav_food: 'chocolate chip cookies' }\n*/"
+                "import { ChatPromptTemplate } from \"@langchain/core/prompts\";\nimport { ChatOpenAI } from \"@langchain/openai\";\nimport {  createOpenAIFnRunnable } from \"langchain/chains/openai_functions\";\nimport { JsonOutputFunctionsParser } from \"langchain/output_parsers\";\nimport type { FunctionDefinition } from \"@langchain/core/language_models/base\";\n\n\ndeclare const function_descriptions: FunctionDefinition[]\n\nconst user_query = [\n  \"let import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo' as unmanaged\",\n  \"how in javascript can iterate over an array\",\n  \"how in javascript can iterate over an array and import the solution 'mysolution.zip' from path '/tmp' in environment 'bartolo'\"\n]\n\nconst model = new ChatOpenAI({ \n});\n\nconst prompt = ChatPromptTemplate.fromMessages([\n  [\"human\", \"Human description: {description}\"],\n]);\n\nconst outputParser = new JsonOutputFunctionsParser();\n\nconst runnable = createOpenAIFnRunnable({\n  functions: function_descriptions,\n  llm: model,\n  prompt,\n  outputParser,\n});\n\nconst response = await runnable.invoke({\n  description: user_query[0],\n});\n\nconsole.log(response);\n/*\n  { name: 'John Doe', age: 30, fav_food: 'chocolate chip cookies' }\n*/"
             ],
-            "outputs": [
-                {
-                    "items": [
-                        {
-                            "mime": "application/vnd.code.notebook.stdout",
-                            "value": [
-                                "{ path: '/tmp/mysolution.zip', environment: 'bartolo' }",
-                                ""
-                            ]
-                        }
-                    ]
-                }
-            ]
+            "outputs": []
         }
     ]
 }

@@ -1,5 +1,10 @@
 langchain
+langchain-core
+langchain-community
+langchain-experimental
 langchain-openai
+langsmith
+langchainhub
 # openai
 pdfminer.six==20221105
 kor
@@ -10,3 +15,4 @@ google-api-python-client
 beautifulsoup4
 PyMuPDF 
 Pillow
+gradio

@@ -1,0 +1,167 @@
+{
+    "cells": [
+        {
+            "language": "typescript",
+            "source": [
+                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Helper Utilites\n\nDefine a helper function below, which make it easier to add new agent worker nodes."
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { AgentExecutor, createOpenAIToolsAgent } from \"langchain/agents\";\nimport { Runnable, type RunnableConfig } from \"@langchain/core/runnables\";\nimport { ChatPromptTemplate, MessagesPlaceholder } from \"@langchain/core/prompts\";\nimport { ChatOpenAI } from \"@langchain/openai\";\nimport { HumanMessage } from \"@langchain/core/messages\";\n\nasync function createAgent(\n  llm: ChatOpenAI, \n  tools: any[], \n  systemPrompt: string\n): Promise<Runnable> {\n  // Each worker node will be given a name and some tools.\n  const prompt = ChatPromptTemplate.fromMessages([\n   [\"system\", systemPrompt],\n    new MessagesPlaceholder(\"messages\"),\n    new MessagesPlaceholder(\"agent_scratchpad\"),\n  ]);\n  const agent = await createOpenAIToolsAgent({ llm, tools, prompt });\n  return new AgentExecutor({agent, tools});\n}\n\n\nasync function agentNode( params:{ state:any, agent:Runnable, name:string }, config?: RunnableConfig) {\n  const { state, agent, name } = params\n\n  const result = await agent.invoke(state, config);\n  return {\n    messages: [\n      new HumanMessage({ content: result.output, name })\n    ]\n  };\n}"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Create Agent Supervisor\n\nThe supervisor routes the work between our worker agents."
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { ChatPromptTemplate, MessagesPlaceholder } from \"@langchain/core/prompts\";\nimport { ChatOpenAI, OpenAIClient } from \"@langchain/openai\";\nimport { JsonOutputToolsParser } from \"langchain/output_parsers\";\n\nconst members = [\"Researcher\", \"ChartGenerator\"];\n\nconst systemPrompt = (\n  \"You are a supervisor tasked with managing a conversation between the\" +\n  \" following workers: {members}. Given the following user request,\" +\n  \" respond with the worker to act next. Each worker will perform a\" +\n  \" task and respond with their results and status. When finished,\" +\n  \" respond with FINISH.\"\n);\n\nconst options = [\"FINISH\", ...members];\n\n// Define the routing function\nconst functionDef = {\n  name: \"route\",\n  description: \"Select the next role.\",\n  parameters: {\n    title: \"routeSchema\",\n    type: \"object\",\n    properties: {\n      next: {\n        title: \"Next\",\n        anyOf: [\n          { enum: options },\n        ],\n      },\n    },\n    required: [\"next\"],\n  },\n};\n\nconst toolDef: OpenAIClient.ChatCompletionTool  = {\n    type: \"function\",\n    function: functionDef,\n}\n\nconst prompt = await ChatPromptTemplate.fromMessages([\n  [\"system\", systemPrompt],\n  new MessagesPlaceholder(\"messages\"),\n  [\n    \"system\",\n    `Given the conversation above, who should act next? Or should we FINISH? Select one of: {options}`,\n  ],\n])\n.partial({ options: options.join(\", \"), members: members.join(\", \") });\nconsole.log( prompt )\nconst llm = new ChatOpenAI({ modelName: \"gpt-4-1106-preview\", temperature: 0, });\n\nconst llm_binded_with_tool = llm.bind({ \n  tools: [toolDef], \n  tool_choice: { \n    \"type\": \"function\", \n    \"function\": {\"name\": \"route\"}} })\n\nconst supervisorChain = prompt\n  .pipe( llm_binded_with_tool )\n  .pipe( new JsonOutputToolsParser() )\n   // select the first one\n  .pipe( x => x[0].args );\n"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "ChatPromptTemplate {",
+                                "  lc_serializable: true,",
+                                "  lc_kwargs: {",
+                                "    inputVariables: [ 'members', 'messages', 'options' ],",
+                                "    promptMessages: [",
+                                "      [SystemMessagePromptTemplate],",
+                                "      [MessagesPlaceholder],",
+                                "      [SystemMessagePromptTemplate]",
+                                "    ],",
+                                "    partialVariables: [Object: null prototype] {}",
+                                "  },",
+                                "  lc_runnable: true,",
+                                "  name: undefined,",
+                                "  lc_namespace: [ 'langchain_core', 'prompts', 'chat' ],",
+                                "  inputVariables: [ 'messages' ],",
+                                "  outputParser: undefined,",
+                                "  partialVariables: {",
+                                "    options: 'FINISH, Researcher, ChartGenerator',",
+                                "    members: 'Researcher, ChartGenerator'",
+                                "  },",
+                                "  promptMessages: [",
+                                "    SystemMessagePromptTemplate {",
+                                "      lc_serializable: true,",
+                                "      lc_kwargs: [Object],",
+                                "      lc_runnable: true,",
+                                "      name: undefined,",
+                                "      lc_namespace: [Array],",
+                                "      inputVariables: [Array],",
+                                "      additionalOptions: {},",
+                                "      prompt: [PromptTemplate],",
+                                "      messageClass: undefined,",
+                                "      chatMessageClass: undefined",
+                                "    },",
+                                "    MessagesPlaceholder {",
+                                "      lc_serializable: true,",
+                                "      lc_kwargs: [Object],",
+                                "      lc_runnable: true,",
+                                "      name: undefined,",
+                                "      lc_namespace: [Array],",
+                                "      variableName: 'messages',",
+                                "      optional: false",
+                                "    },",
+                                "    SystemMessagePromptTemplate {",
+                                "      lc_serializable: true,",
+                                "      lc_kwargs: [Object],",
+                                "      lc_runnable: true,",
+                                "      name: undefined,",
+                                "      lc_namespace: [Array],",
+                                "      inputVariables: [Array],",
+                                "      additionalOptions: {},",
+                                "      prompt: [PromptTemplate],",
+                                "      messageClass: undefined,",
+                                "      chatMessageClass: undefined",
+                                "    }",
+                                "  ],",
+                                "  validateTemplate: true",
+                                "}",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.error",
+                            "value": {
+                                "name": "Error",
+                                "message": "OpenAI or Azure OpenAI API key not found",
+                                "stack": "    at new ChatOpenAI (/Users/bsorrentino/WORKSPACES/GITHUB.me/AI/langchain-labs/langchain-labs#main/node_modules/@langchain/openai/dist/chat_models.cjs:342:19)\n    at <Cell 5> [51, 0]\n    at processTicksAndRejections (node:internal/process/task_queues:95:5)\n    at async E (/Users/bsorrentino/.vscode/extensions/bsorrentino.typescript-notebook-3.0.2/out/extension/server/index.js:2:94614)\n    at async t.execCode (/Users/bsorrentino/.vscode/extensions/bsorrentino.typescript-notebook-3.0.2/out/extension/server/index.js:2:95454)"
+                            }
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { Runnable } from \"@langchain/core/runnables\";\nimport { HumanMessage } from \"@langchain/core/messages\";\n\ndeclare const supervisorChain: Runnable;\n  \nawait supervisorChain.invoke({\n    messages: [\n      new HumanMessage({\n        content:\"write a report on birds.\"\n      })\n    ]\n  });"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "{",
+                                "  next: \u001b[32m'Researcher'\u001b[39m",
+                                "}"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "Next, create the agents to add to the graph."
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { ChatOpenAI } from \"@langchain/openai\";\nimport { Runnable, type RunnableConfig } from \"@langchain/core/runnables\";\nimport { HumanMessage } from \"@langchain/core/messages\";\n\ndeclare const llm:ChatOpenAI\ndeclare function agentNode(params:{ state:any, agent:Runnable, name:string }, config?: RunnableConfig): Promise<{\n  messages: HumanMessage[];\n}>\ndeclare function createAgent(llm: ChatOpenAI, tools: any[], systemPrompt: string): Promise<Runnable>\n\nconst researcherAgent = await createAgent(\n  llm, \n  [tavilyTool], \n  `You are a web researcher. You may use the Tavily search engine to search the web for \n  important information, so the Chart Generator in your team can make useful plots.`\n);\n\nconst researcherNode = async (state:any, config?:RunnableConfig) => await agentNode({\n  state, \n  agent: researcherAgent, \n  name: \"Researcher\",\n}, config);\n\nconst chartGenAgent = await createAgent(\n  llm, \n  [chartTool], \n  \"You excel at generating bar charts. Use the researcher's information to generate the charts.\"\n);\n\nconst chartGenNode = async (state:any, config?:RunnableConfig) => await agentNode({\n  state, agent: chartGenAgent, \n  name: \"ChartGenerator\",\n}, config);"
+            ],
+            "outputs": []
+        },
+        {
+            "language": "markdown",
+            "source": [
+                "### Construct Graph\n\nWe're ready to start building the graph. First, we'll define the state the graph will track.\n\nNow we can create the graph itself! Add the nodes, and add edges to define how how work will be performed in the graph."
+            ],
+            "outputs": []
+        },
+        {
+            "language": "typescript",
+            "source": [
+                "import { StateGraph, END } from \"@langchain/langgraph\";\nimport { BaseMessage, AIMessage } from \"@langchain/core/messages\";\nimport { Runnable, type RunnableConfig } from \"@langchain/core/runnables\";\n\ndeclare const researcherNode:Runnable;\ndeclare const chartGenNode:Runnable;\ndeclare const supervisorChain:Runnable;\ndeclare const members:string[];\n\ninterface AgentStateChannels {\n  messages: {\n    value: (x: BaseMessage[], y: BaseMessage[]) => BaseMessage[];\n    default: () => BaseMessage[];\n  };\n  \n}\n\n// This defines the agent state\nconst agentStateChannels: AgentStateChannels = {\n  messages: {\n    value: (x: BaseMessage[], y: BaseMessage[]) => x.concat(y),\n    default: () => [],\n  }\n};\n\n\n// 1. Create the graph\nconst workflow = new StateGraph({\n  channels: agentStateChannels,\n});\n\n// 2. Add the nodes; these will do the work\nworkflow.addNode(\"Researcher\", researcherNode);\nworkflow.addNode(\"ChartGenerator\", chartGenNode);\nworkflow.addNode(\"supervisor\", supervisorChain);\n// 3. Define the edges. We will define both regular and conditional ones\n// After a worker completes, report to supervisor\nmembers.forEach(member => {\n  workflow.addEdge(member, \"supervisor\");\n});\n\n// When the supervisor returns, route to the agent identified in the supervisor's output\nconst conditionalMap: { [key: string]: string } = members.reduce((acc, member) => {\n    acc[member] = member;\n    return acc;\n}, {});\n// Or end work if done\nconditionalMap[\"FINISH\"] = END;\n\nworkflow.addConditionalEdges(\n    \"supervisor\", \n    (x: { next: string }) => x.next,\n    conditionalMap,\n);\n\nworkflow.setEntryPoint(\"supervisor\");\n\nconst graph = workflow.compile();"
+            ],
+            "outputs": []
+        }
+    ]
+}
