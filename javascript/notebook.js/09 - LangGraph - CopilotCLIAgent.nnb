@@ -38,7 +38,7 @@
         {
             "language": "javascript",
             "source": [
-                "import { pull } from \"langchain/hub\";\nimport { createOpenAIFunctionsAgent } from \"langchain/agents\";\nimport { ChatOpenAI } from \"@langchain/openai\";\nimport { ChatPromptTemplate, MessagesPlaceholder } from \"@langchain/core/prompts\";\nimport os from 'node:os' \n\nconst tools = [new SystemCommandTool()];\n\n// Get the prompt to use - you can modify this!\nlet prompt = await pull<ChatPromptTemplate>(\n  \"bsorrentino/copilot-cli-agent\"\n)\n\nprompt = await prompt.partial( { platform: os.platform() } );\n\n// Choose the LLM that will drive the agent\nconst llm = new ChatOpenAI({\n  modelName: \"gpt-4-1106-preview\",\n  temperature: 0\n});\n\n// Construct the OpenAI Functions agent\nconst agentRunnable = await createOpenAIFunctionsAgent({\n  llm,\n  tools,\n  prompt\n});"
+                "import { pull } from \"langchain/hub\";\nimport { createOpenAIFunctionsAgent } from \"langchain/agents\";\nimport { ChatOpenAI } from \"@langchain/openai\";\nimport { ChatPromptTemplate, MessagesPlaceholder } from \"@langchain/core/prompts\";\nimport os from 'node:os' \n\nconst tools = [new SystemCommandTool()];\n\n// Get the prompt to use - you can modify this!\nlet prompt = await pull<ChatPromptTemplate>(\n  \"bsorrentino/copilot-cli-agent\"\n)\n\nprompt = await prompt.partial( { platform: os.platform() } );\n\n// Choose the LLM that will drive the agent\nconst llm = new ChatOpenAI({\n  modelName: \"gpt-3.5-turbo-0613\",\n  temperature: 0\n});\n\n// Construct the OpenAI Functions agent\nconst agentRunnable = await createOpenAIFunctionsAgent({\n  llm,\n  tools,\n  prompt\n});"
             ],
             "outputs": []
         },
@@ -87,6 +87,50 @@
         {
             "language": "javascript",
             "source": [
+                "const inputs = { input: \"list files in 'downloads' folder and for each create a symbolic link in the '/tmp' directory \" }\nawait app.invoke(inputs)"
+            ],
+            "outputs": [
+                {
+                    "items": [
+                        {
+                            "mime": "application/vnd.code.notebook.stdout",
+                            "value": [
+                                "running system command tool ls -1 downloads | xargs -I {} ln -s $PWD/downloads/{} /tmp/{}",
+                                ""
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "items": [
+                        {
+                            "mime": "text/plain",
+                            "value": [
+                                "{",
+                                "  input: \u001b[32m\"list files in 'downloads' folder and for each create a symbolic link in the '/tmp' directory \"\u001b[39m,",
+                                "  chatHistory: \u001b[1mnull\u001b[22m,",
+                                "  steps: [",
+                                "    {",
+                                "      action: \u001b[36m[Object]\u001b[39m,",
+                                "      observation: \u001b[32m'\"command executed: ls -1 downloads | xargs -I {} ln -s $PWD/downloads/{} /tmp/{}\"'\u001b[39m",
+                                "    }",
+                                "  ],",
+                                "  agentOutcome: {",
+                                "    returnValues: {",
+                                "      output: \u001b[32m'completed'\u001b[39m",
+                                "    },",
+                                "    log: \u001b[32m'completed'\u001b[39m",
+                                "  }",
+                                "}"
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "language": "javascript",
+            "source": [
                 "\nconst inputs = { input: \"list files in 'downloads' folder and for each create a symbolic link in the '/tmp' directory \" }\nfor await (const s of await app.stream(inputs)) {\n  console.log(s)\n  console.log(\"----\\n\")\n}"
             ],
             "outputs": [
@@ -100,44 +144,27 @@
                                 "    agentOutcome: {",
                                 "      tool: 'system_cmd',",
                                 "      toolInput: [Object],",
-                                "      log: 'Invoking \"system_cmd\" with {\"input\":\"ls ~/downloads\"}\\n',",
+                                "      log: 'Invoking \"system_cmd\" with {\\n' +",
+                                "        '  \"input\": \"ls -1 downloads | xargs -I {} ln -s $PWD/downloads/{} /tmp/{}\"\\n' +",
+                                "        '}\\n',",
                                 "      messageLog: [Array]",
                                 "    }",
                                 "  }",
                                 "}",
                                 "----",
                                 "",
-                                "running system command tool ls ~/downloads",
+                                "running system command tool ls -1 downloads | xargs -I {} ln -s $PWD/downloads/{} /tmp/{}",
                                 "{ action: { steps: [ [Object] ] } }",
                                 "----",
                                 "",
-                                "{",
-                                "  agent: {",
-                                "    agentOutcome: {",
-                                "      tool: 'system_cmd',",
-                                "      toolInput: [Object],",
-                                "      log: 'Invoking \"system_cmd\" with {\"input\":\"ln -s ~/downloads/* /tmp/\"}\\n',",
-                                "      messageLog: [Array]",
-                                "    }",
-                                "  }",
-                                "}",
-                                "----",
-                                "",
-                                "running system command tool ln -s ~/downloads/* /tmp/",
-                                "{ action: { steps: [ [Object] ] } }",
-                                "----",
-                                "",
-                                "{",
-                                "  agent: { agentOutcome: { returnValues: [Object], log: 'Completed' } }",
-                                "}",
                                 "----",
                                 "",
                                 "{",
                                 "  __end__: {",
                                 "    input: \"list files in 'downloads' folder and for each create a symbolic link in the '/tmp' directory \",",
                                 "    chatHistory: null,",
-                                "    steps: [ [Object], [Object] ],",
-                                "    agentOutcome: { returnValues: [Object], log: 'Completed' }",
+                                "    steps: [ [Object] ],",
+                                "    agentOutcome: { returnValues: [Object], log: 'completed' }",
                                 "  }",
                                 "}",
                                 "----",
