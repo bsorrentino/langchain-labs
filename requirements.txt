@@ -5,6 +5,7 @@ langchain-experimental
 langchain-openai
 langsmith
 langchainhub
+langgraph
 # openai
 pdfminer.six==20221105
 kor
