@@ -1,9 +1,8 @@
 
 from os import path, getenv
-import base64
 from langgraph.graph import StateGraph, END
 
-from agent_state import AgentState
+from agent_state import AgentState, get_image_data
 from agent_describe import describe_diagram_image
 from agent_generic_plantuml import translate_generic_diagram_description_to_plantUML
 from agent_sequence_plantuml import translate_sequence_diagram_description_to_plantUML
@@ -16,12 +15,6 @@ def route_diagram_translation(state: AgentState):
     else:
         return "generic"
 
-def get_image_data(image_path):
-
-    with open(image_path, "rb") as image_file:
-        image_data = image_file.read()
-        base64_encoded = base64.b64encode(image_data).decode("utf-8")
-        return "data:image/png;base64," + base64_encoded
 
 # Define a new graph
 
