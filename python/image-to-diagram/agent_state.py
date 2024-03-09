@@ -1,15 +1,33 @@
 import base64
-from typing import TypedDict
+from typing import TypedDict, List
+
+class DiagramParticipant(TypedDict):
+    name: str
+    shape: str
+    description: str
+
+class DiagramRelation(TypedDict):
+    source: str # source
+    target: str # destination
+    description: str
+
+class DiagramContainer(TypedDict):
+    name: str # source
+    children: List[str] # destination
+    description: str
 
 class DiagramDescription(TypedDict):
     type: str
     title: str
-    description: str
+    participans: List[DiagramParticipant]
+    relations: List[DiagramRelation]
+    containers: List[DiagramContainer]
 
 class AgentState(TypedDict):
     # messages: Annotated[Sequence[BaseMessage], operator.add]
     diagram_image_url_or_data: str
     diagram: DiagramDescription
+    diagram_raw: str
     diagram_code: str
 
 

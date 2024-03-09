@@ -23,20 +23,48 @@ def describe_diagram_image_test_sequence_01( state: AgentState):
 
 def describe_diagram_image_test_generic_01( state: AgentState):
     return { "diagram": {
-        "type": "process",
-        "title": "Workflow Process Diagram",
-        "description": """
-        1. An Outlook trigger starts the process. 
-        2. The trigger submits data for text analysis. 
-        2.1 The text analysis function is invoked. 
-        3. The processed data is then saved in Dataverse. 
-        4. A Canvas App reads the data from Dataverse. 
-        5. The data is sent to an Approver who approves it. 
-        6. Upon approval, a Flow is run. 
-        7. The Flow checks out (locks) a document in Sharepoint. 
-        8. A script is invoked by the Flow and it waits for a return. 
-        9. The script applies some operation in an Excel file. 
-        10. After the operation, the document is checked in (unlocked) in Sharepoint. Finally, the updated document is validated and shared with a Validator.
-        """
-    }}
+	"type": "process",
+	"title": "Approval and Validation Process",
+	"description": "The diagram illustrates a multi-step process involving various applications and user roles. The process begins with Outlook triggering a Flow (1), which then submits data to Text Analysis (2). The Text Analysis invokes a Function (2.1). The Flow saves the output to Dataverse (3). A Canvas App reads from Dataverse (4) and requires approval from an Approver (5). Once approved, the Canvas App triggers another Flow (6), which checks out a document in Sharepoint (7), invokes a Script (8), and waits for a return. The Script applies changes to an Excel file (9), which is then checked in (unlocked) by the Flow (10). Finally, the Excel file is ready for validation and sharing by a Validator."
+}}
 
+def describe_diagram_image_test_generic_02( state: AgentState):
+    return { "diagram": { "type": "workflow" }, "diagram_raw": """
+    ```json
+    {
+        "type": "process",
+        "title": "Approval and Validation Process",
+        "participants": [
+            { "name": "Outlook", "shape": "rectangle", "description": "Email service" },
+            { "name": "Flow", "shape": "parallelogram", "description": "Automation service" },
+            { "name": "Text Analysis", "shape": "rectangle", "description": "Text analysis service" },
+            { "name": "Function", "shape": "rectangle", "description": "Cloud function service" },
+            { "name": "Dataverse", "shape": "cylinder", "description": "Data storage service" },
+            { "name": "Canvas App", "shape": "rectangle", "description": "Application interface" },
+            { "name": "Approver", "shape": "person", "description": "Person who approves" },
+            { "name": "Validator", "shape": "person", "description": "Person who validates and shares" },
+            { "name": "Script", "shape": "document", "description": "Script file" },
+            { "name": "Excel", "shape": "document", "description": "Excel file" },
+            { "name": "Sharepoint", "shape": "rectangle", "description": "Collaboration platform" }
+        ],
+        "relations": [
+            { "source": "Outlook", "target": "Flow", "description": "trigger" },
+            { "source": "Flow", "target": "Text Analysis", "description": "submit" },
+            { "source": "Text Analysis", "target": "Function", "description": "invoke" },
+            { "source": "Flow", "target": "Dataverse", "description": "Save" },
+            { "source": "Dataverse", "target": "Canvas App", "description": "Read" },
+            { "source": "Canvas App", "target": "Approver", "description": "Approve" },
+            { "source": "Approver", "target": "Canvas App", "description": "Approve" },
+            { "source": "Canvas App", "target": "Flow", "description": "Run" },
+            { "source": "Flow", "target": "Script", "description": "Check Out (lock)" },
+            { "source": "Script", "target": "Excel", "description": "Apply" },
+            { "source": "Excel", "target": "Validator", "description": "Validate & Share" },
+            { "source": "Validator", "target": "Excel", "description": "Validate & Share" },
+            { "source": "Flow", "target": "Excel", "description": "Check in (unlock)" }
+        ],
+        "containers": [
+            { "name": "Sharepoint", "children": ["Script", "Excel"], "description": "Document library" }
+        ]
+    }
+    ```
+    """ }
