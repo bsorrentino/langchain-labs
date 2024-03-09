@@ -17,3 +17,4 @@ beautifulsoup4
 PyMuPDF 
 Pillow
 gradio
+grandalf
