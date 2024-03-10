@@ -21,50 +21,181 @@ def describe_diagram_image_test_sequence_01( state: AgentState):
         """ 
         }}
 
-def describe_diagram_image_test_generic_01( state: AgentState):
-    return { "diagram": {
-	"type": "process",
-	"title": "Approval and Validation Process",
-	"description": "The diagram illustrates a multi-step process involving various applications and user roles. The process begins with Outlook triggering a Flow (1), which then submits data to Text Analysis (2). The Text Analysis invokes a Function (2.1). The Flow saves the output to Dataverse (3). A Canvas App reads from Dataverse (4) and requires approval from an Approver (5). Once approved, the Canvas App triggers another Flow (6), which checks out a document in Sharepoint (7), invokes a Script (8), and waits for a return. The Script applies changes to an Excel file (9), which is then checked in (unlocked) by the Flow (10). Finally, the Excel file is ready for validation and sharing by a Validator."
-}}
+def describe_diagram_image_test_sequence_02( state: AgentState):
+    return { "diagram":{
+    "type": "sequence",
+    "title": "Chunked Transfer Encoding over HTTP",
+    "participants": [
+        {
+            "name": "Web App",
+            "shape": "actor",
+            "description": "Initiates the HTTP request and processes the response"
+        },
+        {
+            "name": "Web Server",
+            "shape": "actor",
+            "description": "Handles the HTTP request and sends a chunked response"
+        }
+    ],
+    "relations": [
+        {
+            "source": "Web App",
+            "target": "Web Server",
+            "description": "GET /resource HTTP/1.1"
+        },
+        {
+            "source": "Web Server",
+            "target": "Web App",
+            "description": "Transfer-Encoding: chunked, Content-Type: text/plain, HTTP/1.1 200 OK"
+        },
+        {
+            "source": "Web App",
+            "target": "Web Server",
+            "description": "request data"
+        },
+        {
+            "source": "Web Server",
+            "target": "Web App",
+            "description": "fetch data"
+        },
+        {
+            "source": "Web Server",
+            "target": "Web App",
+            "description": "Prepare chunk"
+        },
+        {
+            "source": "Web App",
+            "target": "Web Server",
+            "description": "write chunk"
+        },
+        {
+            "source": "Web App",
+            "target": "Web Server",
+            "description": "decode chunk"
+        }
+    ],
+    "containers": [
+        {
+            "name": "loop",
+            "children": [
+                "fetch data",
+                "Prepare chunk",
+                "write chunk",
+                "decode chunk"
+            ],
+            "description": "Loop until data ends"
+        }
+    ],
+    "description": [
+        "The Web App sends a GET request for a resource to the Web Server using HTTP/1.1.",
+        "The Web Server responds with headers indicating that the transfer encoding is chunked and the content type is text/plain, followed by an HTTP/1.1 200 OK status.",
+        "The Web App then enters a loop, requesting data from the Web Server.",
+        "Within the loop, the Web Server fetches the data and prepares a chunk of the response.",
+        "The Web App writes the chunk and then decodes it.",
+        "This loop continues until all data has been sent and decoded."
+    ]
+    }}
 
 def describe_diagram_image_test_generic_02( state: AgentState):
-    return { "diagram": { "type": "workflow" }, "diagram_raw": """
-    ```json
-    {
-        "type": "process",
-        "title": "Approval and Validation Process",
-        "participants": [
-            { "name": "Outlook", "shape": "rectangle", "description": "Email service" },
-            { "name": "Flow", "shape": "parallelogram", "description": "Automation service" },
-            { "name": "Text Analysis", "shape": "rectangle", "description": "Text analysis service" },
-            { "name": "Function", "shape": "rectangle", "description": "Cloud function service" },
-            { "name": "Dataverse", "shape": "cylinder", "description": "Data storage service" },
-            { "name": "Canvas App", "shape": "rectangle", "description": "Application interface" },
-            { "name": "Approver", "shape": "person", "description": "Person who approves" },
-            { "name": "Validator", "shape": "person", "description": "Person who validates and shares" },
-            { "name": "Script", "shape": "document", "description": "Script file" },
-            { "name": "Excel", "shape": "document", "description": "Excel file" },
-            { "name": "Sharepoint", "shape": "rectangle", "description": "Collaboration platform" }
-        ],
-        "relations": [
-            { "source": "Outlook", "target": "Flow", "description": "trigger" },
-            { "source": "Flow", "target": "Text Analysis", "description": "submit" },
-            { "source": "Text Analysis", "target": "Function", "description": "invoke" },
-            { "source": "Flow", "target": "Dataverse", "description": "Save" },
-            { "source": "Dataverse", "target": "Canvas App", "description": "Read" },
-            { "source": "Canvas App", "target": "Approver", "description": "Approve" },
-            { "source": "Approver", "target": "Canvas App", "description": "Approve" },
-            { "source": "Canvas App", "target": "Flow", "description": "Run" },
-            { "source": "Flow", "target": "Script", "description": "Check Out (lock)" },
-            { "source": "Script", "target": "Excel", "description": "Apply" },
-            { "source": "Excel", "target": "Validator", "description": "Validate & Share" },
-            { "source": "Validator", "target": "Excel", "description": "Validate & Share" },
-            { "source": "Flow", "target": "Excel", "description": "Check in (unlock)" }
-        ],
-        "containers": [
-            { "name": "Sharepoint", "children": ["Script", "Excel"], "description": "Document library" }
-        ]
-    }
-    ```
-    """ }
+    return { "diagram":{
+    "type": "process",
+    "title": "LLM Application Data Flow",
+    "participants": [
+        {
+            "name": "Event Stream",
+            "shape": "cylinder",
+            "description": "Source of event data"
+        },
+        {
+            "name": "Preprocessing",
+            "shape": "rectangle",
+            "description": "Initial processing of events"
+        },
+        {
+            "name": "LLM Application",
+            "shape": "rectangle",
+            "description": "Main application processing events"
+        },
+        {
+            "name": "Postprocessing",
+            "shape": "rectangle",
+            "description": "Processing after main application"
+        },
+        {
+            "name": "Output",
+            "shape": "cylinder",
+            "description": "Final output of the data flow"
+        },
+        {
+            "name": "Observability",
+            "shape": "rectangle",
+            "description": "Metrics and logs monitoring"
+        },
+        {
+            "name": "LLM Service",
+            "shape": "rectangle",
+            "description": "External service for LLM (e.g., OpenAI)"
+        },
+        {
+            "name": "LLM Tracing",
+            "shape": "rectangle",
+            "description": "Tracing service for LLM (e.g., LangSmith)"
+        }
+    ],
+    "relations": [
+        {
+            "source": "Event Stream",
+            "target": "Preprocessing",
+            "description": "Feeds into"
+        },
+        {
+            "source": "Preprocessing",
+            "target": "LLM Application",
+            "description": "Feeds into"
+        },
+        {
+            "source": "LLM Application",
+            "target": "Postprocessing",
+            "description": "Feeds into"
+        },
+        {
+            "source": "Postprocessing",
+            "target": "Output",
+            "description": "Feeds into"
+        },
+        {
+            "source": "LLM Application",
+            "target": "Observability",
+            "description": "Sends data to"
+        },
+        {
+            "source": "LLM Application",
+            "target": "LLM Service",
+            "description": "Interacts with"
+        },
+        {
+            "source": "LLM Application",
+            "target": "LLM Tracing",
+            "description": "Interacts with"
+        }
+    ],
+    "containers": [
+        {
+            "name": "Stream Processor",
+            "children": [
+                "Preprocessing",
+                "LLM Application",
+                "Postprocessing"
+            ],
+            "description": "Processes the event stream"
+        }
+    ],
+    "description": [
+        "The Event Stream is the starting point, which feeds into Preprocessing.",
+        "Preprocessing is part of the Stream Processor and prepares data for the LLM Application.",
+        "The LLM Application processes the data and may interact with external services like LLM Service and LLM Tracing.",
+        "After processing, the data is sent to Postprocessing, which is also part of the Stream Processor.",
+        "The Postprocessing stage prepares the final Output.",
+        "Throughout the process, the LLM Application sends data to Observability for monitoring purposes."
+    ]
+    }}

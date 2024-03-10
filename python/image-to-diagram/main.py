@@ -6,7 +6,7 @@ from agent_state import AgentState, get_image_data
 from agent_describe import describe_diagram_image
 from agent_generic_plantuml import translate_generic_diagram_description_to_plantUML
 from agent_sequence_plantuml import translate_sequence_diagram_description_to_plantUML
-from test_nodes import describe_diagram_image_test_generic_02, describe_diagram_image_test_sequence_01, describe_diagram_image_test_generic_01
+from test_nodes import describe_diagram_image_test_generic_02, describe_diagram_image_test_sequence_02
 
 
 def route_diagram_translation(state: AgentState):
@@ -21,7 +21,7 @@ def route_diagram_translation(state: AgentState):
 workflow = StateGraph(AgentState)
 
 if( getenv("TEST") == "sequence" ):
-    workflow.add_node("agent_describer", describe_diagram_image_test_sequence_01)
+    workflow.add_node("agent_describer", describe_diagram_image_test_sequence_02)
 else:
     if( getenv("TEST") == "generic" ):
         workflow.add_node("agent_describer", describe_diagram_image_test_generic_02)

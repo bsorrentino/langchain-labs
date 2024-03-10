@@ -1,6 +1,6 @@
 import base64
 from typing import TypedDict, List
-
+from langchain.output_parsers import StructuredOutputParser
 class DiagramParticipant(TypedDict):
     name: str
     shape: str
@@ -22,14 +22,13 @@ class DiagramDescription(TypedDict):
     participans: List[DiagramParticipant]
     relations: List[DiagramRelation]
     containers: List[DiagramContainer]
+    description: str # NLP description
 
 class AgentState(TypedDict):
     # messages: Annotated[Sequence[BaseMessage], operator.add]
     diagram_image_url_or_data: str
     diagram: DiagramDescription
-    diagram_raw: str
     diagram_code: str
-
 
 def get_image_data(image_path):
 
