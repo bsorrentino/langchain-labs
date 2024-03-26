@@ -13,6 +13,7 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>17</maven.compiler.source>
     <maven.compiler.target>17</maven.compiler.target>
+    <langchai4j.version>0.28.0</langchai4j.version>
   </properties>
 
   <modules>
@@ -28,17 +29,17 @@
       <dependency>
         <groupId>dev.langchain4j</groupId>
         <artifactId>langchain4j</artifactId>
-        <version>0.23.0</version>
+        <version>${langchai4j.version}</version>
       </dependency>
       <dependency>
         <groupId>dev.langchain4j</groupId>
         <artifactId>langchain4j-open-ai</artifactId>
-        <version>0.23.0</version>
+        <version>${langchai4j.version}</version>
       </dependency>
       <dependency>
         <groupId>dev.langchain4j</groupId>
         <artifactId>langchain4j-azure-open-ai</artifactId>
-        <version>0.23.0</version>
+        <version>${langchai4j.version}</version>
       </dependency>
 
       <!-- LOGGING -->

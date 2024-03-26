@@ -2,10 +2,6 @@ package org.bsc.ai;
 
 import dev.langchain4j.model.openai.OpenAiChatModel;
 
-import java.util.Arrays;
-import java.util.Optional;
-
-import static dev.langchain4j.model.openai.OpenAiModelName.GPT_3_5_TURBO;
 
 /**
  * Hello world!
@@ -16,12 +12,12 @@ public class App
 
     public static void main( String[] args ) throws Exception
     {
-        var config = AIConfig.of(args);
+        var config = AIConfig.of();
 
         // Create an instance of a model
         var model = OpenAiChatModel.builder()
-                .apiKey( config.getApiKey() )
-                .modelName( config.getModel() )
+                .apiKey( config.OPENAI_API_KEY() )
+                .modelName( "gpt-3.5-turbo" )
                 .logResponses(true)
                 .maxRetries(5)
                 .temperature(0.0)

@@ -10,9 +10,9 @@ import org.bsc.ai.AIConfig;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Paths;
 import java.util.Optional;
 
-import static dev.langchain4j.model.openai.OpenAiModelName.GPT_3_5_TURBO_0613;
 import static java.lang.String.format;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -22,14 +22,14 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
  */
 public class CopilotCLITest
 {
-    final AIConfig config = AIConfig.of( new String[0]);
+    final AIConfig config = AIConfig.of(Paths.get("..", ".env"));
 
     interface Assistant {
 
         String chat(String message);
     }
 
-    class SystemCommandTool {
+    static class SystemCommandTool {
 
         private String command ;
 
@@ -41,11 +41,7 @@ public class CopilotCLITest
         String exec(@P("command") String command) {
             this.command = command;
 
-            var result =  format( "command executed: %s", command);
-
-            // System.out.println( result );
-
-            return result;
+            return format( "command executed: %s", command);
         }
     }
 
@@ -60,9 +56,10 @@ public class CopilotCLITest
     @Test
     public void executeSystemCommands()
     {
+
         var chatLanguageModel = OpenAiChatModel.builder()
-                .apiKey(config.getApiKey())
-                .modelName(GPT_3_5_TURBO_0613)
+                .apiKey(config.OPENAI_API_KEY())
+                .modelName("gpt-3.5-turbo-0613")
                 .temperature(0.0)
                 .build()
                 ;
