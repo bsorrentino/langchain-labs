@@ -17,14 +17,14 @@
         {
             "language": "javascript",
             "source": [
-                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../.env' })"
+                "import dotenv from 'dotenv'\n\nconst result = dotenv.config({ path: '../../.env' })"
             ],
             "outputs": []
         },
         {
             "language": "javascript",
             "source": [
-                "import { pull } from \"langchain/hub\";\nimport { createOpenAIFunctionsAgent } from \"langchain/agents\";\nimport { ChatOpenAI } from \"@langchain/openai\";\nimport { TavilySearchResults } from \"@langchain/community/tools/tavily_search\";\nimport { ChatPromptTemplate } from \"@langchain/core/prompts\";\n\nconst tools = [new TavilySearchResults({ maxResults: 1 })];\n\n// Get the prompt to use - you can modify this!\nconst prompt = await pull<ChatPromptTemplate>(\n  \"hwchase17/openai-functions-agent\"\n);\n\nconsole.log( prompt )\n\n// Choose the LLM that will drive the agent\nconst llm = new ChatOpenAI({\n  modelName: \"gpt-4-1106-preview\",\n  temperature: 0\n});\n\n// Construct the OpenAI Functions agent\nconst agentRunnable = await createOpenAIFunctionsAgent({\n  llm,\n  tools,\n  prompt\n});"
+                "import { pull } from \"langchain/hub\";\nimport { createOpenAIFunctionsAgent } from \"langchain/agents\";\nimport { ChatOpenAI } from \"@langchain/openai\";\nimport { TavilySearchResults } from \"@langchain/community/tools/tavily_search\";\nimport { ChatPromptTemplate } from \"@langchain/core/prompts\";\n\nconst tools = [new TavilySearchResults({ maxResults: 1 })];\n\n// Get the prompt to use - you can modify this!\nconst prompt = await pull<ChatPromptTemplate>(\n  \"hwchase17/openai-functions-agent\"\n);\n\nconsole.log( prompt )\n\n// Choose the LLM that will drive the agent\nconst llm = new ChatOpenAI({\n  modelName: \"gpt-3.5-turbo-1106\",\n  temperature: 0,\n  verbose: true\n});\n\n// Construct the OpenAI Functions agent\nconst agentRunnable = await createOpenAIFunctionsAgent({\n  llm,\n  tools,\n  prompt\n});"
             ],
             "outputs": []
         },
