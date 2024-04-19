@@ -72,19 +72,16 @@ const isUrl = ( source:string ) => {
     }
   };
 
-export async function imageToDiagram( image:string ) {
-  
-  const result = await app.stream( {
+export const imageToDiagramAsStream = async ( image:string ) => 
+  await app.stream( {
     diagramImageUrlOrData: isUrl(image) ? image : imageFileToUrl(image)
   })
 
-  let lastItem: { [k: string]: AgentState }|null = null
 
-  for await (const item of result) {
-    console.debug( item )
-    lastItem = item
-  }
 
-  return lastItem ? lastItem[END].diagramCode : null
-  // rest of the code
-}
+export const imageToDiagram = async ( image:string ) => 
+  
+  await app.invoke( {
+    diagramImageUrlOrData: isUrl(image) ? image : await imageFileToUrl(image)
+  })
+

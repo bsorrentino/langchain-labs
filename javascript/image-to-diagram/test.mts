@@ -4,6 +4,7 @@ import { translateGenericDiagramDescriptionToPlantUML } from "./agent_generic_pl
 import { ChatOpenAI } from "@langchain/openai";
 import { translateSequenceDiagramDescriptionToPlantUML } from "./agent_sequence_plantuml.mts";
 import { imageToDiagram } from "./main.mts";
+import { AgentState } from "./agent_state";
 
 const processDiagram = {
   "type": "process",
@@ -212,8 +213,19 @@ async function testTimageToDiagram( image:string ) {
   console.debug( `RESULT:\n`,result )
 }
 
+async function testTimageToDiagramAsStream( image:string ) {
+
+  const result = await imageToDiagram( image );
+  let lastItem: { [k: string]: AgentState }|null = null
+
+  for await (const item of result) {
+    console.debug( item )
+  }
+}
+
 // await testDescribeDiagram( 'diagram1.png' )
 // await testDescribeDiagram( 'http-streaming.png' )
 // await testTranslateGenericDiagramDescriptionToPlantUML()
 // await testTranslateSequenceDiagramDescriptionToPlantUML
 await testTimageToDiagram( 'https://blog.langchain.dev/content/images/2024/01/supervisor-diagram.png') 
+
