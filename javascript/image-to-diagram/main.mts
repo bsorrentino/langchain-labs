@@ -43,7 +43,7 @@ const translateSequence = async ( state: AgentState, options?: Partial<RunnableC
   };
   
 
-const workflow = new StateGraph( { channels: agentState } );
+const workflow = new StateGraph<AgentState>( { channels: agentState } );
 
 workflow.addNode("agent_describer", new RunnableLambda( { func: describeDiagramImage } ) );
 workflow.addNode("agent_sequence_plantuml", new RunnableLambda( { func: translateSequence } ) );

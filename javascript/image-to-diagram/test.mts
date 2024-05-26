@@ -5,6 +5,7 @@ import { ChatOpenAI } from "@langchain/openai";
 import { translateSequenceDiagramDescriptionToPlantUML } from "./agent_sequence_plantuml.mts";
 import { imageToDiagram } from "./main.mts";
 import { AgentState } from "./agent_state";
+import * as hub from "langchain/hub";
 
 const processDiagram = {
   "type": "process",
@@ -109,6 +110,117 @@ const processDiagram = {
   ]
 }
 
+const flowchartDiagram =  {
+  type: "flowchart",
+  title: "Product Development Process",
+  participants: [
+    {
+      name: "Brainstorming",
+      shape: "rectangle",
+      description: "Initial phase where ideas are generated",
+    }, {
+      name: "Trends",
+      shape: "rectangle",
+      description: "Identification of current market trends",
+    }, {
+      name: "New Product",
+      shape: "rectangle",
+      description: "Conceptualization of a new product",
+    }, {
+      name: "Research",
+      shape: "rectangle",
+      description: "Research phase to gather information",
+    }, {
+      name: "Prototyping",
+      shape: "diamond",
+      description: "Decision point for prototyping success",
+    }, {
+      name: "Quick Design",
+      shape: "rectangle",
+      description: "Rapid design iteration",
+    }, {
+      name: "Refinement",
+      shape: "rectangle",
+      description: "Refinement of the design",
+    }, {
+      name: "Review",
+      shape: "rectangle",
+      description: "Review phase if prototyping is not successful",
+    }, {
+      name: "Design",
+      shape: "rectangle",
+      description: "Detailed design phase",
+    }, {
+      name: "Implementation",
+      shape: "rectangle",
+      description: "Implementation of the design",
+    }, {
+      name: "Testing",
+      shape: "rectangle",
+      description: "Testing phase for the implemented design",
+    }
+  ],
+  relations: [
+    {
+      source: "Brainstorming",
+      target: "Trends",
+      description: "Follows",
+    }, {
+      source: "Trends",
+      target: "New Product",
+      description: "Follows",
+    }, {
+      source: "New Product",
+      target: "Research",
+      description: "Follows",
+    }, {
+      source: "Research",
+      target: "Prototyping",
+      description: "Leads to",
+    }, {
+      source: "Prototyping",
+      target: "Quick Design",
+      description: "If NO",
+    }, {
+      source: "Quick Design",
+      target: "Refinement",
+      description: "Follows",
+    }, {
+      source: "Refinement",
+      target: "Review",
+      description: "Follows",
+    }, {
+      source: "Review",
+      target: "Prototyping",
+      description: "Leads back to",
+    }, {
+      source: "Prototyping",
+      target: "Design",
+      description: "If YES",
+    }, {
+      source: "Design",
+      target: "Implementation",
+      description: "Follows",
+    }, {
+      source: "Implementation",
+      target: "Testing",
+      description: "Follows",
+    }
+  ],
+  containers: [],
+  description: [
+    "The process begins with 'Brainstorming', where ideas are generated.", "From 'Brainstorming', the process moves to 'Trends' to identify market trends.",
+    "After identifying trends, the 'New Product' phase conceptualizes the product.",
+    "Following the new product idea, 'Research' is conducted for more information.",
+    "The 'Research' phase leads to 'Prototyping', a decision point to assess if the prototype is successful.",
+    "If 'Prototyping' is not successful (NO), the process moves to 'Quick Design' for rapid iteration.",
+    "After 'Quick Design', the process goes through 'Refinement'.", "Post 'Refinement', the 'Review' phase evaluates the changes.",
+    "If changes are adequate, it loops back to 'Prototyping'.", "If 'Prototyping' is successful (YES), the process continues to 'Design' for detailed planning.",
+    "From 'Design', the process moves to 'Implementation' where the design is executed.",
+    "Finally, 'Implementation' is followed by 'Testing' to ensure the product meets the required standards."
+  ],
+}
+
 const sequenceDiagram = {
     type: "sequence",
     title: "Chunked Transfer Encoding over HTTP",
@@ -205,15 +317,24 @@ async function testTranslateSequenceDiagramDescriptionToPlantUML() {
 
     console.debug( result )
 }
+async function testTranslateGenericDiagramDescriptionToPlantUML2() {
 
-async function testTimageToDiagram( image:string ) {
+  const result = await translateGenericDiagramDescriptionToPlantUML( llm, { 
+      // diagramImageUrlOrData: await imageFileToUrl( path.join( 'assets', 'diagram1.png') ) 
+      diagram: flowchartDiagram
+  });
+
+  console.debug( result.diagramCode )
+}
+
+async function testImageToDiagram( image:string ) {
 
   const result = await imageToDiagram( image );
 
-  console.debug( `RESULT:\n`,result )
+  console.debug( `RESULT:\n`,result.diagram, result.diagramCode )
 }
 
-async function testTimageToDiagramAsStream( image:string ) {
+async function testImageToDiagramAsStream( image:string ) {
 
   const result = await imageToDiagram( image );
   let lastItem: { [k: string]: AgentState }|null = null
@@ -227,5 +348,11 @@ async function testTimageToDiagramAsStream( image:string ) {
 // await testDescribeDiagram( 'http-streaming.png' )
 // await testTranslateGenericDiagramDescriptionToPlantUML()
 // await testTranslateSequenceDiagramDescriptionToPlantUML
-await testTimageToDiagram( 'https://blog.langchain.dev/content/images/2024/01/supervisor-diagram.png') 
+// await testImageToDiagram( 'https://blog.langchain.dev/content/images/2024/01/supervisor-diagram.png') 
 
+//await testImageToDiagram( '/private/tmp/plantuml+gpt/flowchart_promo-showcase.jpg' )
+
+const prompt = await hub.pull<any>("bsorrentino/convert_generic_diagram_to_plantuml");
+console.debug( prompt.template )
+
+await testTranslateGenericDiagramDescriptionToPlantUML2()
