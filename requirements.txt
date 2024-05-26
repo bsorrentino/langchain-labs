@@ -1,0 +1,21 @@
+langchain
+langchain-core
+langchain-community
+langchain-experimental
+langchain-openai
+langsmith
+langchainhub
+langgraph
+# openai
+pdfminer.six==20221105
+kor
+google-api-python-client
+#google-search-tools
+#pandas
+#requests 
+beautifulsoup4
+PyMuPDF 
+Pillow
+gradio
+grandalf
+playwright
