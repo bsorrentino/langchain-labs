@@ -7,7 +7,12 @@ node_modules/
 bun.lockb
 daisyui_components/
 package-lock.json
-assets/PO/*.pdf
-assets/PO/*.html
 .parcel-cache/
 dist/
+
+assets/PO/*.pdf
+assets/PO/*.html
+assets/volantino_ete_1.png
+assets/volantino_ete_1.pdf
+assets/customers-list.csv
+assets/customers-list-update.csv
