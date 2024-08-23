@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mermaid preview</title>
+    <style>
+        .container {
+            height: 70vh;
+            display: grid;
+            grid-template-columns: 30% 70%;
+            grid-template-rows: [header] 60px auto [command] 60px;
+            grid-template-areas: 
+                "header header"
+                "input diagram"
+                "command diagram";
+        }
+        .input {
+            grid-area: input;
+            resize: none;
+            margin: 10px;
+        }
+        .command {
+            grid-area: command;
+            display: flex;
+            justify-content: flex-end;
+            margin: 10px;
+        }
+    </style>
+    <script type="module" src="./LangGraph.ts"></script>
+    <script type="module" src="./mermaid-preview-bundled.js"></script>
+
+    <script>
+        function invoke() {
+            const agent = document.querySelector('langraph-mermaid')
+            const mermaid = document.getElementById('preview1')
+
+            const input = document.getElementById('input')
+
+            agent.addEventListener( 'agent-result', e => {
+                console.dir( e.detail );
+                const { diagramCode } = e.detail
+                const cleanedDiagramCode = diagramCode.replace(/^```mermaid\s*/, '').replace(/```$/, '');
+                console.log( cleanedDiagramCode )
+                mermaid.dispatchEvent( new CustomEvent( 'graph', {
+                    detail: cleanedDiagramCode
+                }))
+            })
+            agent.setAttribute('input', input.value )
+            
+        }
+    </script>
+</head>
+
+<body>
+    <langraph-mermaid></langraph-mermaid>
+    <div class="container">
+        <h2 style="grid-area: header;">LangGraph runs into browser - Process Mermaid Diagram<hr></h2>
+        <textarea id="input" class="input"></textarea>
+        <div class="command">
+            <button onclick="invoke()">Invoke</button>
+        </div>
+        <mermaid-preview style="grid-area: diagram;" id="preview1" theme="base">
+graph 
+        </mermaid-preview>
+    </div>
+</body>
+
+</html>
