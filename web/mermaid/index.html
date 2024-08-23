@@ -7,7 +7,6 @@
     <title>Mermaid preview</title>
     <style>
         .container {
-            height: 70vh;
             display: grid;
             grid-template-columns: 30% 70%;
             grid-template-rows: [header] 60px auto [command] 60px;
@@ -27,9 +26,16 @@
             justify-content: flex-end;
             margin: 10px;
         }
+        .diagram {
+            height: 100vh;
+            grid-area: diagram;
+            border: black;
+            border-style: double;
+        }
     </style>
     <script type="module" src="./LangGraph.ts"></script>
-    <script type="module" src="./mermaid-preview-bundled.js"></script>
+    
+    <script type="module" type="text/javascript" src="https://cdn.gisthostfor.me/bsorrentino-DfnvUVop9j-mermaid-preview.js"></script>
 
     <script>
         function invoke() {
@@ -39,10 +45,10 @@
             const input = document.getElementById('input')
 
             agent.addEventListener( 'agent-result', e => {
-                console.dir( e.detail );
+                // console.dir( e.detail );
                 const { diagramCode } = e.detail
                 const cleanedDiagramCode = diagramCode.replace(/^```mermaid\s*/, '').replace(/```$/, '');
-                console.log( cleanedDiagramCode )
+                console.debug( cleanedDiagramCode )
                 mermaid.dispatchEvent( new CustomEvent( 'graph', {
                     detail: cleanedDiagramCode
                 }))
@@ -57,13 +63,57 @@
     <langraph-mermaid></langraph-mermaid>
     <div class="container">
         <h2 style="grid-area: header;">LangGraph runs into browser - Process Mermaid Diagram<hr></h2>
-        <textarea id="input" class="input"></textarea>
+        <textarea id="input" class="input">
+            {
+                "type": "generic",
+                "title": "Agent calling Tools in an Environment",
+                "participants": [
+                    {
+                        "name": "Agent",
+                        "shape": "rectangle",
+                        "description": "An entity that initiates actions and performs reasoning"
+                    },
+                    {
+                        "name": "Tools",
+                        "shape": "rectangle",
+                        "description": "Set of tools available within the environment for the agent"
+                    }
+                ],
+                "relations": [
+                    {
+                        "source": "Agent",
+                        "target": "Tools",
+                        "description": "CALL"
+                    },
+                    {
+                        "source": "Agent",
+                        "target": "Agent",
+                        "description": "Internal reasoning process within the agent"
+                    }
+            
+                ],
+                "containers": [
+                    {
+                        "name": "Environment",
+                        "children": [
+                            "Tools"
+                        ],
+                        "description": "reasoning"
+                    }
+                ],
+                "description": [
+                    "1. The Agent performs reasoning internally.",
+                    "2. The Agent makes a CALL to Tools within the Environment."
+                ]
+            }
+        </textarea>
         <div class="command">
             <button onclick="invoke()">Invoke</button>
         </div>
-        <mermaid-preview style="grid-area: diagram;" id="preview1" theme="base">
-graph 
-        </mermaid-preview>
+        <div class="diagram">
+            <mermaid-preview  id="preview1" theme="base"> 
+            </mermaid-preview>                
+        </div>
     </div>
 </body>
 
