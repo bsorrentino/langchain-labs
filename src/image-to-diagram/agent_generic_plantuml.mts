@@ -1,6 +1,6 @@
 import { PromptTemplate } from "@langchain/core/prompts";
 import { StringOutputParser } from "@langchain/core/output_parsers";
-import { AgentState } from "./agent_state";
+import { AgentState } from "./agent_state.js";
 import * as hub from "langchain/hub";
 import { ChatOpenAI } from "@langchain/openai";
 import type { RunnableConfig } from "@langchain/core/runnables";

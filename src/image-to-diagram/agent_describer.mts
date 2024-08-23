@@ -2,7 +2,7 @@ import { PromptTemplate } from "@langchain/core/prompts";
 import { pull } from "langchain/hub"
 import { JsonMarkdownStructuredOutputParser, StructuredOutputParser } from "langchain/output_parsers"
 import type { RunnableConfig } from "@langchain/core/runnables";
-import { diagram_schema, AgentState } from "./agent_state";
+import { diagram_schema, AgentState } from "./agent_state.js";
 import { ChatOpenAI } from "@langchain/openai";
 import { HumanMessage } from "@langchain/core/messages"
 import fs from 'fs/promises'

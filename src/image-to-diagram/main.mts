@@ -1,27 +1,21 @@
 
 
-import { END, StateGraph } from "@langchain/langgraph";
+import { END, START, StateGraph } from "@langchain/langgraph";
 import { ChatOpenAI } from "@langchain/openai";
 import { RunnableLambda, RunnableConfig } from "@langchain/core/runnables";
-import { describeDiagramImage, imageFileToUrl } from "./agent_describer.mts";
-import { translateGenericDiagramDescriptionToPlantUML } from "./agent_generic_plantuml.mts";
-import { translateSequenceDiagramDescriptionToPlantUML } from "./agent_sequence_plantuml.mts";
-import { AgentState } from "./agent_state";
+import { describeDiagramImage, imageFileToUrl } from "./agent_describer.mjs";
+import { translateGenericDiagramDescriptionToPlantUML } from "./agent_generic_plantuml.mjs";
+import { translateSequenceDiagramDescriptionToPlantUML } from "./agent_sequence_plantuml.mjs";
+import { AgentState } from "./agent_state.js";
 
 const agentState = {
-  diagramImageUrlOrData: {
-    value: null
-  },
-  diagramCode: {
-    value: null
-  },
-  diagram: {
-    value: null,
-  }
+  diagramImageUrlOrData: null,
+  diagramCode: null,
+  diagram: null,
 };
 
 const llm = new ChatOpenAI({
-  modelName: "gpt-3.5-turbo",
+  modelName: "gpt-4o-mini",
   maxTokens:2000,
   temperature:0,
   maxRetries:1,
@@ -43,24 +37,18 @@ const translateSequence = async ( state: AgentState, options?: Partial<RunnableC
   };
   
 
-const workflow = new StateGraph<AgentState>( { channels: agentState } );
-
-workflow.addNode("agent_describer", new RunnableLambda( { func: describeDiagramImage } ) );
-workflow.addNode("agent_sequence_plantuml", new RunnableLambda( { func: translateSequence } ) );
-workflow.addNode("agent_gemeric_plantuml", new RunnableLambda( { func: translateGeneric } ) );
-workflow.addEdge('agent_sequence_plantuml', END);
-workflow.addEdge('agent_gemeric_plantuml', END);
-workflow.addConditionalEdges(
-  "agent_describer",
-  route_diagram_translation,
-  {
-    "sequence": "agent_sequence_plantuml",
-    "generic": "agent_gemeric_plantuml",
-  }
-);
-workflow.setEntryPoint('agent_describer');
-
-const app = workflow.compile();
+  const app =  new StateGraph<AgentState>( { channels: agentState } )
+        .addNode("agent_describer", new RunnableLambda( { func: describeDiagramImage } ) )
+        .addNode("agent_sequence_plantuml", new RunnableLambda( { func: translateSequence } ) )
+        .addNode("agent_gemeric_plantuml", new RunnableLambda( { func: translateGeneric } ) )
+        .addEdge('agent_sequence_plantuml', END)
+        .addEdge('agent_gemeric_plantuml', END)
+        .addConditionalEdges( "agent_describer", route_diagram_translation, {
+          "sequence": "agent_sequence_plantuml",
+          "generic": "agent_gemeric_plantuml",
+        })
+        .addEdge(START, 'agent_describer')
+        .compile();
 
 
 const isUrl = ( source:string ) => {
